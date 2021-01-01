@@ -1,0 +1,6 @@
+# Miscellaneous
+__pycache__
+venv
+serviceAccountKey.json
+restaurants.json
+inspections.json
