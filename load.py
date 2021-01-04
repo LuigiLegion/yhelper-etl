@@ -8,12 +8,11 @@ from firebase_admin import credentials, firestore
 # Initializations
 def load(transform_file, collection):
     try:
-        # Retrieve Firestore service account key file path
-        path = str(pathlib.Path(__file__).parent.absolute())
-        service_acc_key = path + "/serviceAccountKey.json"
+        # Determine Firestore service account key file path
+        path = str(pathlib.Path(__file__).parent.absolute()) + "/serviceAccountKey.json"
 
         # Initialize Firestore client
-        cred = credentials.Certificate(service_acc_key)
+        cred = credentials.Certificate(path)
         firebase_admin.initialize_app(cred)
         db = firestore.client()
 
