@@ -69,8 +69,12 @@ def transform(extract_file, transform_file):
             else:
                 insps[date] = [insp]
         else:
-            rest = restaurant(datum, insp, date)
-            rests[phone] = rest
+            rests[phone] = restaurant(datum, insp, date)
+
+    for rest in rests.values():
+        insps_list = [{key: val} for key, val in rest.get("inspections").items()]
+        sorted_insps_list = sorted(insps_list, key=lambda r: list(r.keys())[0], reverse=True)
+        rest["inspections"] = sorted_insps_list
 
     # Print number of restaurants with valid inspections in dataset
     print("restaurants: ", len(rests.keys()))  # 26256
@@ -80,3 +84,6 @@ def transform(extract_file, transform_file):
         dump(rests, f, indent=4)
 
     print("Transformation Process Completed Successfully")
+
+
+transform("inspections.json", "restaurants.json")
