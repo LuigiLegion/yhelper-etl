@@ -12,6 +12,8 @@ SOCRATA_RECORD_LIMIT = 400000
 EXTRACT_FILE = "inspections.json"
 TRANSFORM_FILE = "restaurants.json"
 FIRESTORE_COLLECTION = "restaurants"
+FIRESTORE_RECORD_LIMIT = 10000
+FIRESTORE_LOAD_CYCLE = 0
 
 
 # Initializations
@@ -21,7 +23,7 @@ def main():
     # Transform raw data
     transform(EXTRACT_FILE, TRANSFORM_FILE)
     # Load transformed data to Firestore
-    # load(TRANSFORM_FILE, FIRESTORE_COLLECTION)
+    load(TRANSFORM_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
 
 
 if __name__ == '__main__':
