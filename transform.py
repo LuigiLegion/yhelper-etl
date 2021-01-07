@@ -3,41 +3,36 @@ from operator import itemgetter
 from simplejson import load, dump
 
 
+# Constants
+EXTRACT_FILE = "inspections.json"
+TRANSFORM_FILE = "restaurants.json"
+
+
 # Initializations
-def inspection(datum):
+def violation(datum):
     return {
-        "inspection_date": datum.get("inspection_date"),
-        # "action": datum.get("action"),
-        # "violation_code": datum.get("violation_code"),
         "violation_description": datum.get("violation_description"),
-        "critical_flag": datum.get("critical_flag"),
-        "score": datum.get("score"),
-        "grade": datum.get("grade"),
-        # "grade_date": datum.get("grade_date"),
-        # "record_date": datum.get("record_date"),
-        "inspection_type": datum.get("inspection_type")
+        "critical_flag": datum.get("critical_flag")
     }
 
 
-def restaurant(datum, insp, date):
+def inspection(datum):
     return {
-        # "camis": datum.get("camis"),
+        "score": datum.get("score"),
+        "grade": datum.get("grade"),
+        "inspection_type": datum.get("inspection_type"),
+        "violations": [violation(datum)]
+    }
+
+
+def restaurant(datum, date):
+    return {
         "dba": datum.get("dba"),
         "boro": datum.get("boro"),
         "building": datum.get("building"),
         "street": datum.get("street"),
         "zipcode": datum.get("zipcode"),
-        # "phone": datum.get("phone"),
-        # "cuisine_description": datum.get("cuisine_description"),
-        # "latitude": datum.get("latitude"),
-        # "longitude": datum.get("longitude"),
-        # "community_board": datum.get("community_board"),
-        # "council_district": datum.get("council_district"),
-        # "census_tract": datum.get("census_tract"),
-        # "bin": datum.get("bin"),
-        # "bbl": datum.get("bbl"),
-        # "nta": datum.get("nta"),
-        "inspections": {date: [insp]}
+        "inspections": {date: inspection(datum)}
     }
 
 
@@ -58,32 +53,44 @@ def transform(extract_file, transform_file):
 
     for datum in sorted_valid_data:
         phone = datum.get("phone")
-        insp = inspection(datum)
-        date = insp.get("inspection_date")
+        date = datum.get("inspection_date")
 
         if phone in rests:
             insps = rests.get(phone).get("inspections")
 
             if date in insps:
-                insps.get(date).append(insp)
-            else:
-                insps[date] = [insp]
-        else:
-            rests[phone] = restaurant(datum, insp, date)
+                insp = insps.get(date)
+                viol = violation(datum)
+                insp.get("violations").append(viol)
 
-    for rest in rests.values():
-        insps_list = [{key: val} for key, val in rest.get("inspections").items()]
+                if (insp.get("grade") is None or insp.get("score") is None) and (datum.get("grade") and datum.get("score")):
+                    insp["grade"] = datum.get("grade")
+                    insp["score"] = datum.get("score")
+
+            else:
+                insps[date] = inspection(datum)
+
+        else:
+            rests[phone] = restaurant(datum, date)
+
+    # Initialize restaurants list
+    rests_list = []
+
+    for phone, rest in rests.items():
+        insps_list = [{date: insp} for date, insp in rest.get("inspections").items()]
         sorted_insps_list = sorted(insps_list, key=lambda r: list(r.keys())[0], reverse=True)
         rest["inspections"] = sorted_insps_list
+        rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("restaurants: ", len(rests.keys()))  # 26256
+    print("restaurants list: ", len(rests_list))  # 26256
 
     # Create transform_file before running this
     with open(transform_file, "w+") as f:
-        dump(rests, f, indent=4)
+        dump(rests_list, f, indent=4)
 
     print("Transformation Process Completed Successfully")
 
 
-transform("inspections.json", "restaurants.json")
+if __name__ == '__main__':
+    transform(EXTRACT_FILE, TRANSFORM_FILE)
