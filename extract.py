@@ -3,6 +3,14 @@ from sodapy import Socrata
 from simplejson import dump
 
 
+# Constants
+SOCARTA_TOKEN = None
+SOCRATA_COLLECTION = "data.cityofnewyork.us"
+SOCRATA_DOCUMENT = "43nn-pn8j"
+SOCRATA_RECORD_LIMIT = 400000
+EXTRACT_FILE = "inspections.json"
+
+
 # Initializations
 def extract(token, collection, document, limit, extract_file):
     try:
@@ -24,3 +32,8 @@ def extract(token, collection, document, limit, extract_file):
 
     else:
         print("Extraction Process Completed Successfully")
+
+
+if __name__ == '__main__':
+    # Extract raw data from Socrata
+    extract(SOCARTA_TOKEN, SOCRATA_COLLECTION, SOCRATA_DOCUMENT, SOCRATA_RECORD_LIMIT, EXTRACT_FILE)

@@ -5,8 +5,15 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 
+# Constants
+TRANSFORM_FILE = "restaurants.json"
+FIRESTORE_COLLECTION = "restaurants"
+FIRESTORE_RECORD_LIMIT = 15000
+FIRESTORE_LOAD_CYCLE = 0
+
+
 # Initializations
-def load(transform_file, collection):
+def load(transform_file, collection, limit, cycle):
     try:
         # Determine Firestore service account key file path
         path = str(pathlib.Path(__file__).parent.absolute()) + "/serviceAccountKey.json"
@@ -23,9 +30,18 @@ def load(transform_file, collection):
         # Initialize Firestore collection reference
         coll_ref = db.collection(collection)
 
-        for key, datum in data.items():
-            coll_ref.document(key).set(datum)
-            print(f"Added: {key}")
+        # Determine lower, upper, and max bounds
+        lower_bound = limit * cycle
+        upper_bound = limit * (cycle + 1)
+        max_bound = len(data)
+
+        if upper_bound > max_bound:
+            upper_bound = max_bound
+
+        for i in range(lower_bound, upper_bound):
+            for key, datum in data[i].items():
+                coll_ref.document(key).set(datum)
+                print(f"Added: {key}")
 
     except Exception as err:
         print(f"Error: {err}")
@@ -33,3 +49,8 @@ def load(transform_file, collection):
 
     else:
         print("Load Process Completed Successfully")
+
+
+if __name__ == '__main__':
+    # Load transformed data to Firestore
+    load(TRANSFORM_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
