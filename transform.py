@@ -9,6 +9,14 @@ TRANSFORM_FILE = "restaurants.json"
 
 
 # Initializations
+def valid_phone(phone):
+    return phone and len(phone) == 10 and phone.isnumeric()
+
+
+def valid_date(date):
+    return date and date != "1900-01-01T00:00:00.000"
+
+
 def violation(datum):
     return {
         "violation_description": datum.get("violation_description"),
@@ -41,10 +49,10 @@ def transform(extract_file, transform_file):
     with open(extract_file, "r") as f:
         data = load(f)
 
-    # Filter out inspections with invalid phone, dba, or inspection_date
-    valid_data = list(filter(lambda r: r.get("phone") and r.get("phone").isnumeric() and r.get("dba") and r.get("inspection_date"), data))
+    # Filter out inspections with invalid phone or inspection_date
+    valid_data = list(filter(lambda r: valid_phone(r.get("phone")) and valid_date(r.get("inspection_date")), data))
     # Print number of valid inspections in dataset
-    print("valid inspections: ", len(valid_data))  # 397246
+    print("valid inspections: ", len(valid_data))  # 394749
     # Sort valid inspections by restaurant name
     sorted_valid_data = sorted(valid_data, key=itemgetter("dba"))
 
@@ -83,7 +91,7 @@ def transform(extract_file, transform_file):
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("restaurants list: ", len(rests_list))  # 26256
+    print("restaurants list: ", len(rests_list))  # 24359
 
     # Create transform_file before running this
     with open(transform_file, "w+") as f:
@@ -93,4 +101,5 @@ def transform(extract_file, transform_file):
 
 
 if __name__ == '__main__':
+    # Transform raw data
     transform(EXTRACT_FILE, TRANSFORM_FILE)
