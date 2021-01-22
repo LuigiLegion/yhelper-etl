@@ -1,5 +1,6 @@
 # Imports
 from operator import itemgetter
+
 from simplejson import load, dump
 
 
@@ -19,27 +20,31 @@ def valid_date(date):
 
 def violation(datum):
     return {
-        "violation_description": datum.get("violation_description"),
-        "critical_flag": datum.get("critical_flag")
+        "description": datum.get("violation_description"),
+        "critical": True if datum.get("critical_flag") == "Y" else False
     }
 
 
 def inspection(datum):
     return {
-        "score": datum.get("score"),
+        "date": datum.get("inspection_date"),
         "grade": datum.get("grade"),
-        "inspection_type": datum.get("inspection_type"),
+        "score": datum.get("score"),
         "violations": [violation(datum)]
     }
 
 
 def restaurant(datum, date):
     return {
-        "dba": datum.get("dba"),
-        "boro": datum.get("boro"),
+        "name": datum.get("dba"),
+        "phone": datum.get("phone"),
         "building": datum.get("building"),
         "street": datum.get("street"),
+        "borough": datum.get("boro"),
+        "state": "NY",
         "zipcode": datum.get("zipcode"),
+        "latitude": datum.get("latitude"),
+        "longitude": datum.get("longitude"),
         "inspections": {date: inspection(datum)}
     }
 
@@ -85,8 +90,8 @@ def transform(extract_file, transform_file):
     rests_list = []
 
     for phone, rest in rests.items():
-        insps_list = [{date: insp} for date, insp in rest.get("inspections").items()]
-        sorted_insps_list = sorted(insps_list, key=lambda r: list(r.keys())[0], reverse=True)
+        insps_list = [insp for insp in rest.get("inspections").values()]
+        sorted_insps_list = sorted(insps_list, key=itemgetter("date"), reverse=True)
         rest["inspections"] = sorted_insps_list
         rests_list.append({phone: rest})
 
