@@ -1,6 +1,6 @@
 # Imports
-from sodapy import Socrata
 from simplejson import dump
+from sodapy import Socrata
 
 
 # Constants
