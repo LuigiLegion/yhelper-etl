@@ -8,16 +8,21 @@ from firebase_admin import credentials, firestore
 
 # Constants
 TRANSFORM_FILE = "restaurants.json"
+FIRESTORE_SAK_FILE = "serviceAccountKey.json"
 FIRESTORE_COLLECTION = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0
 
 
 # Initializations
-def load(transform_file, collection, limit, cycle):
+def file_path(file_name):
+    return f"{pathlib.Path(__file__).parent.absolute()}/{file_name}"
+
+
+def load(transform_file, sak_file, collection, limit, cycle):
     try:
         # Determine Firestore service account key file path
-        path = str(pathlib.Path(__file__).parent.absolute()) + "/serviceAccountKey.json"
+        path = file_path(sak_file)
 
         # Initialize Firestore client
         cred = credentials.Certificate(path)
@@ -54,4 +59,4 @@ def load(transform_file, collection, limit, cycle):
 
 if __name__ == '__main__':
     # Load transformed data to Firestore
-    load(TRANSFORM_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
+    load(TRANSFORM_FILE, FIRESTORE_SAK_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
