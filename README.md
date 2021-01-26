@@ -6,7 +6,7 @@ Coming soon...
 
 ### Description:
 
-ETL process that extracts NYC DOH restaurant inspection data from the Socrata Open Data API, transforms it by removing invalid entries and grouping inspections by date under a single restaurant by phone number, and loads it into a Firestore document-based NOSQL database with a REST API.
+ETL process that extracts NYC DOH restaurant and food inspection data from the Socrata Open Data API, transforms it by removing invalid entries and grouping inspections by date under a single restaurant by phone number, and loads it into a Firestore document-based NOSQL database with a REST API.
 
 The REST API will allow consumers to easily retrieve a single restaurant's historical inspection data and incorporate it into their solutions.
 
