@@ -20,7 +20,7 @@ def extract(token, collection, document, limit, extract_file):
         # Extract data from document
         data = client.get(document, limit=limit)
         # Print number of inspections in dataset
-        print("total inspections: ", len(data))  # 398434
+        print("total inspections: ", len(data))  # 397481
 
         # Create extract_file before running this
         with open(extract_file, "w+") as f:
