@@ -1,4 +1,5 @@
 # Imports
+import re
 from operator import itemgetter
 
 from simplejson import load, dump
@@ -10,18 +11,46 @@ TRANSFORM_FILE = "restaurants.json"
 
 
 # Initializations
-def valid_phone(phone):
-    return phone and len(phone) == 10 and phone.isnumeric()
+def is_valid_phone(phone):
+    return len(phone) == 10 and phone != "0000000000"
 
 
-def valid_date(date):
+def is_valid_date(date):
     return date and date != "1900-01-01T00:00:00.000"
+
+
+def is_invalid_inspection_gos(insp):
+    return insp.get("grade") is None or insp.get("score") is None
+
+
+def is_valid_datum_gos(datum):
+    return datum.get("grade") and datum.get("score")
+
+
+def phone_digits(phone):
+    return "".join(re.findall(r"\d+", phone)) if phone else ""
+
+
+def mod_digits(mod):
+    return mod[1] if mod[0] == "0" else mod
+
+
+def formatted_phone(phone):
+    return phone[1:] if len(phone) == 11 and phone[0] == 1 else phone
+
+
+def formatted_date(date):
+    return mod_digits(date[5:7]) + "/" + mod_digits(date[8:10]) + "/" + date[:4]
+
+
+def formatted_critical(critical):
+    return True if critical == "Y" else False
 
 
 def violation(datum):
     return {
         "description": datum.get("violation_description"),
-        "critical": True if datum.get("critical_flag") == "Y" else False
+        "critical": formatted_critical(datum.get("critical_flag"))
     }
 
 
@@ -30,7 +59,7 @@ def inspection(datum):
         "date": datum.get("inspection_date"),
         "grade": datum.get("grade"),
         "score": datum.get("score"),
-        "violations": [violation(datum)]
+        "violations": [violation(datum)] if datum.get("violation_description") else []
     }
 
 
@@ -42,7 +71,7 @@ def restaurant(datum, date):
         "street": datum.get("street"),
         "borough": datum.get("boro"),
         "state": "NY",
-        "zipcode": datum.get("zipcode"),
+        "zip": datum.get("zipcode"),
         "latitude": datum.get("latitude"),
         "longitude": datum.get("longitude"),
         "inspections": {date: inspection(datum)}
@@ -51,56 +80,56 @@ def restaurant(datum, date):
 
 def transform(extract_file, transform_file):
     # Create extract_file before running this
-    with open(extract_file, "r") as f:
-        data = load(f)
-
-    # Filter out inspections with invalid phone or inspection_date
-    valid_data = list(filter(lambda r: valid_phone(r.get("phone")) and valid_date(r.get("inspection_date")), data))
-    # Print number of valid inspections in dataset
-    print("valid inspections: ", len(valid_data))  # 394749
-    # Sort valid inspections by restaurant name
-    sorted_valid_data = sorted(valid_data, key=itemgetter("dba"))
+    with open(extract_file, "r") as ef:
+        data = load(ef)
 
     # Initialize restaurants dict
     rests = {}
 
-    for datum in sorted_valid_data:
-        phone = datum.get("phone")
+    for datum in data:
+        phone = formatted_phone(phone_digits(datum.get("phone")))
         date = datum.get("inspection_date")
 
-        if phone in rests:
-            insps = rests.get(phone).get("inspections")
+        if is_valid_phone(phone) and is_valid_date(date):
+            if phone in rests:
+                insps = rests.get(phone).get("inspections")
 
-            if date in insps:
-                insp = insps.get(date)
-                viol = violation(datum)
-                insp.get("violations").append(viol)
+                if date in insps:
+                    insp = insps.get(date)
 
-                if (insp.get("grade") is None or insp.get("score") is None) and (datum.get("grade") and datum.get("score")):
-                    insp["grade"] = datum.get("grade")
-                    insp["score"] = datum.get("score")
+                    if datum.get("violation_description"):
+                        viol = violation(datum)
+                        insp.get("violations").append(viol)
+
+                    if is_invalid_inspection_gos(insp) and is_valid_datum_gos(datum):
+                        insp["grade"] = datum.get("grade")
+                        insp["score"] = datum.get("score")
+
+                else:
+                    insps[date] = inspection(datum)
 
             else:
-                insps[date] = inspection(datum)
-
-        else:
-            rests[phone] = restaurant(datum, date)
+                rests[phone] = restaurant(datum, date)
 
     # Initialize restaurants list
     rests_list = []
 
     for phone, rest in rests.items():
-        insps_list = [insp for insp in rest.get("inspections").values()]
-        sorted_insps_list = sorted(insps_list, key=itemgetter("date"), reverse=True)
-        rest["inspections"] = sorted_insps_list
+        insps_list = [i for i in rest.get("inspections").values()]
+        sorted_insps = sorted(insps_list, key=itemgetter("date"), reverse=True)
+
+        for sorted_insp in sorted_insps:
+            sorted_insp["date"] = formatted_date(sorted_insp.get("date"))
+
+        rest["inspections"] = sorted_insps
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("restaurants list: ", len(rests_list))  # 24359
+    print("total valid restaurants: ", len(rests_list))  # 24331
 
     # Create transform_file before running this
-    with open(transform_file, "w+") as f:
-        dump(rests_list, f, indent=4)
+    with open(transform_file, "w+") as tf:
+        dump(rests_list, tf, indent=4)
 
     print("Transformation Process Completed Successfully")
 
