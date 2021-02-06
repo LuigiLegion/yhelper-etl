@@ -22,8 +22,7 @@ def extract(token, collection, document, limit, extract_file):
         # Print number of inspections in dataset
         print("total inspections: ", len(data))  # 397481
 
-        # Create extract_file before running this
-        with open(extract_file, "w+") as f:
+        with open(extract_file, "w") as f:
             dump(data, f, indent=4)
 
     except Exception as err:

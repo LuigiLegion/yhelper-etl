@@ -127,8 +127,7 @@ def transform(extract_file, transform_file):
     # Print number of restaurants with valid inspections in dataset
     print("total valid restaurants: ", len(rests_list))  # 24331
 
-    # Create transform_file before running this
-    with open(transform_file, "w+") as tf:
+    with open(transform_file, "w") as tf:
         dump(rests_list, tf, indent=4)
 
     print("Transformation Process Completed Successfully")
