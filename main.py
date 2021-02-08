@@ -1,7 +1,7 @@
 # Imports
-from extract import extract
-from transform import transform
-from load import load
+from etl.extract import extract
+from etl.transform import transform
+from etl.load import load
 
 
 # Constants
@@ -9,9 +9,9 @@ SOCARTA_TOKEN = None
 SOCRATA_COLLECTION = "data.cityofnewyork.us"
 SOCRATA_DOCUMENT = "43nn-pn8j"
 SOCRATA_RECORD_LIMIT = 400000
-EXTRACT_FILE = "inspections.json"
-TRANSFORM_FILE = "restaurants.json"
-FIRESTORE_SAK_FILE = "serviceAccountKey.json"
+EXTRACT_FILE = "data/inspections.json"
+TRANSFORM_FILE = "data/restaurants.json"
+FIRESTORE_SAK_FILE = "secrets/serviceAccountKey.json"
 FIRESTORE_COLLECTION = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0

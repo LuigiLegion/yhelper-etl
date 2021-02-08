@@ -8,7 +8,7 @@ SOCARTA_TOKEN = None
 SOCRATA_COLLECTION = "data.cityofnewyork.us"
 SOCRATA_DOCUMENT = "43nn-pn8j"
 SOCRATA_RECORD_LIMIT = 400000
-EXTRACT_FILE = "inspections.json"
+EXTRACT_FILE = "../data/inspections.json"
 
 
 # Initializations

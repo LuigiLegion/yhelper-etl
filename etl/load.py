@@ -1,5 +1,5 @@
 # Imports
-import pathlib
+import os
 
 import simplejson
 import firebase_admin
@@ -7,8 +7,8 @@ from firebase_admin import credentials, firestore
 
 
 # Constants
-TRANSFORM_FILE = "restaurants.json"
-FIRESTORE_SAK_FILE = "serviceAccountKey.json"
+TRANSFORM_FILE = "../data/restaurants.json"
+FIRESTORE_SAK_FILE = "secrets/serviceAccountKey.json"
 FIRESTORE_COLLECTION = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0
@@ -16,7 +16,7 @@ FIRESTORE_LOAD_CYCLE = 0
 
 # Initializations
 def file_path(file_name):
-    return f"{pathlib.Path(__file__).parent.absolute()}/{file_name}"
+    return f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/{file_name}"
 
 
 def load(transform_file, sak_file, collection, limit, cycle):

@@ -6,8 +6,8 @@ from simplejson import load, dump
 
 
 # Constants
-EXTRACT_FILE = "inspections.json"
-TRANSFORM_FILE = "restaurants.json"
+EXTRACT_FILE = "../data/inspections.json"
+TRANSFORM_FILE = "../data/restaurants.json"
 
 
 # Initializations
