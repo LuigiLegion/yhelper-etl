@@ -12,7 +12,7 @@ TRANSFORM_FILE = "../data/restaurants.json"
 
 # Initializations
 def is_valid_phone(phone):
-    return len(phone) == 10 and phone != "0000000000"
+    return len(phone) == 10 and phone[0] != "0"
 
 
 def is_valid_date(date):
