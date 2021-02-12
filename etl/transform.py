@@ -133,6 +133,6 @@ def transform(extract_file, transform_file):
     print("Transformation Process Completed Successfully")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Transform raw data
     transform(EXTRACT_FILE, TRANSFORM_FILE)

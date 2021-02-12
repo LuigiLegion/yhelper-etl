@@ -33,6 +33,6 @@ def extract(token, collection, document, limit, extract_file):
         print("Extraction Process Completed Successfully")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Extract raw data from Socrata
     extract(SOCARTA_TOKEN, SOCRATA_COLLECTION, SOCRATA_DOCUMENT, SOCRATA_RECORD_LIMIT, EXTRACT_FILE)

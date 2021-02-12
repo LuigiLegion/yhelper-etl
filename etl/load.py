@@ -57,6 +57,6 @@ def load(transform_file, sak_file, collection, limit, cycle):
         print("Load Process Completed Successfully")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Load transformed data to Firestore
     load(TRANSFORM_FILE, FIRESTORE_SAK_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)

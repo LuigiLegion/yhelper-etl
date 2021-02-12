@@ -27,5 +27,5 @@ def main():
     load(TRANSFORM_FILE, FIRESTORE_SAK_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
