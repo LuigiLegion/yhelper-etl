@@ -19,12 +19,8 @@ def is_valid_date(date):
     return date and date != "1900-01-01T00:00:00.000"
 
 
-def is_invalid_inspection_gos(insp):
+def is_invalid_gos(insp):
     return insp.get("grade") is None or insp.get("score") is None
-
-
-def is_valid_datum_gos(datum):
-    return datum.get("grade") and datum.get("score")
 
 
 def phone_digits(phone):
@@ -43,6 +39,10 @@ def formatted_date(date):
     return mod_digits(date[5:7]) + "/" + mod_digits(date[8:10]) + "/" + date[:4]
 
 
+def formatted_gos(gos):
+    return gos if gos else None
+
+
 def formatted_critical(critical):
     return True if critical == "Y" else False
 
@@ -57,8 +57,8 @@ def violation(datum):
 def inspection(datum):
     return {
         "date": datum.get("inspection_date"),
-        "grade": datum.get("grade"),
-        "score": datum.get("score"),
+        "grade": formatted_gos(datum.get("grade")),
+        "score": formatted_gos(datum.get("score")),
         "violations": [violation(datum)] if datum.get("violation_description") else []
     }
 
@@ -101,9 +101,13 @@ def transform(extract_file, transform_file):
                         viol = violation(datum)
                         insp.get("violations").append(viol)
 
-                    if is_invalid_inspection_gos(insp) and is_valid_datum_gos(datum):
-                        insp["grade"] = datum.get("grade")
-                        insp["score"] = datum.get("score")
+                    if is_invalid_gos(insp):
+                        grade = formatted_gos(datum.get("grade"))
+                        score = formatted_gos(datum.get("score"))
+
+                        if grade and score:
+                            insp["grade"] = grade
+                            insp["score"] = score
 
                 else:
                     insps[date] = inspection(datum)
@@ -125,7 +129,7 @@ def transform(extract_file, transform_file):
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("total valid restaurants: ", len(rests_list))  # 24331
+    print("total valid restaurants: ", len(rests_list))  # 24318
 
     with open(transform_file, "w") as tf:
         dump(rests_list, tf, indent=4)
