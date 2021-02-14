@@ -4,7 +4,23 @@ from etl.transform import is_valid_phone
 
 # Tests
 class TestIsValidPhone:
-    def test_invalid_nine_digit_phone(self):
+    def test_none(self):
+        # Arrange
+        phone = None
+        # Act
+        result = is_valid_phone(phone)
+        # Assert
+        assert result is False
+
+    def test_empty_string(self):
+        # Arrange
+        phone = ""
+        # Act
+        result = is_valid_phone(phone)
+        # Assert
+        assert result is False
+
+    def test_nine_digit_phone(self):
         # Arrange
         phone = "999999999"
         # Act
@@ -12,7 +28,7 @@ class TestIsValidPhone:
         # Assert
         assert result is False
 
-    def test_invalid_eleven_digit_phone(self):
+    def test_eleven_digit_phone(self):
         # Arrange
         phone = "11111111111"
         # Act
