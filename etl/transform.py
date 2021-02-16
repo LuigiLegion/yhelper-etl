@@ -16,7 +16,7 @@ def is_valid_phone(phone):
 
 
 def is_valid_date(date):
-    return date and date != "1900-01-01T00:00:00.000"
+    return bool(date) and date != "1900-01-01T00:00:00.000"
 
 
 def is_invalid_gos(insp):
