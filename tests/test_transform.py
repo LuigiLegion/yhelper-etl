@@ -1,5 +1,5 @@
 # Imports
-from etl.transform import is_valid_phone, is_valid_date
+from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos
 
 
 # Tests
@@ -91,5 +91,91 @@ class TestIsValidDate:
         date = "2020-01-31T00:00:00.000"
         # Act
         result = is_valid_date(date)
+        # Assert
+        assert result is True
+
+
+class TestIsInvalidGos:
+    def test_both_not_none(self):
+        # Arrange
+        insp = {
+            "grade": "A",
+            "score": "0",
+        }
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is False
+
+    def test_grade_none(self):
+        # Arrange
+        insp = {
+            "grade": None,
+            "score": "0",
+        }
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_score_none(self):
+        # Arrange
+        insp = {
+            "grade": "A",
+            "score": None,
+        }
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_both_none(self):
+        # Arrange
+        insp = {
+            "grade": None,
+            "score": None,
+        }
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_grade_missing_score_not_none(self):
+        # Arrange
+        insp = {"score": "0"}
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_grade_missing_score_none(self):
+        # Arrange
+        insp = {"score": None}
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_score_missing_grade_not_none(self):
+        # Arrange
+        insp = {"grade": "A"}
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_score_missing_grade_none(self):
+        # Arrange
+        insp = {"grade": None}
+        # Act
+        result = is_invalid_gos(insp)
+        # Assert
+        assert result is True
+
+    def test_both_missing(self):
+        # Arrange
+        insp = {}
+        # Act
+        result = is_invalid_gos(insp)
         # Assert
         assert result is True
