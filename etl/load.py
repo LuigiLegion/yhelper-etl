@@ -15,11 +15,11 @@ FIRESTORE_LOAD_CYCLE = 0
 
 
 # Initializations
-def file_path(file_name):
+def file_path(file_name: str) -> str:
     return f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/{file_name}"
 
 
-def load(transform_file, sak_file, collection, limit, cycle):
+def load(transform_file: str, sak_file: str, collection: str, limit: int, cycle: int) -> None:
     try:
         # Determine Firestore service account key file path
         path = file_path(sak_file)

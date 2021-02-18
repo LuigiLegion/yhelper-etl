@@ -1,6 +1,7 @@
 # Imports
 import re
 from operator import itemgetter
+from typing import List, Optional
 
 from simplejson import load, dump
 
@@ -11,50 +12,50 @@ TRANSFORM_FILE = "../data/restaurants.json"
 
 
 # Initializations
-def is_valid_phone(phone):
+def is_valid_phone(phone: str) -> bool:
     return bool(phone) and len(phone) == 10 and phone[0] != "0"
 
 
-def is_valid_date(date):
+def is_valid_date(date: str) -> bool:
     return bool(date) and date != "1900-01-01T00:00:00.000"
 
 
-def is_invalid_gos(insp):
+def is_invalid_gos(insp: dict) -> bool:
     return insp.get("grade") is None or insp.get("score") is None
 
 
-def phone_digits(phone):
+def phone_digits(phone: str) -> str:
     return "".join(re.findall(r"\d+", phone)) if phone else ""
 
 
-def mod_digits(mod):
+def mod_digits(mod: str) -> str:
     return mod[1] if mod[0] == "0" else mod
 
 
-def formatted_phone(phone):
+def formatted_phone(phone: str) -> str:
     return phone[1:] if len(phone) == 11 and phone[0] == 1 else phone
 
 
-def formatted_date(date):
+def formatted_date(date: str) -> str:
     return mod_digits(date[5:7]) + "/" + mod_digits(date[8:10]) + "/" + date[:4]
 
 
-def formatted_gos(gos):
+def formatted_gos(gos: str) -> Optional[str]:
     return gos if gos else None
 
 
-def formatted_critical(critical):
+def formatted_critical(critical: str) -> bool:
     return True if critical == "Y" else False
 
 
-def violation(datum):
+def violation(datum: dict) -> dict:
     return {
         "description": datum.get("violation_description"),
         "critical": formatted_critical(datum.get("critical_flag"))
     }
 
 
-def inspection(datum):
+def inspection(datum: dict) -> dict:
     return {
         "date": datum.get("inspection_date"),
         "grade": formatted_gos(datum.get("grade")),
@@ -63,7 +64,7 @@ def inspection(datum):
     }
 
 
-def restaurant(datum, date):
+def restaurant(datum: dict, date: str) -> dict:
     return {
         "name": datum.get("dba"),
         "phone": datum.get("phone"),
@@ -78,7 +79,7 @@ def restaurant(datum, date):
     }
 
 
-def transform(extract_file, transform_file):
+def transform(extract_file: str, transform_file: str) -> List[dict]:
     # Create extract_file before running this
     with open(extract_file, "r") as ef:
         data = load(ef)

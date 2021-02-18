@@ -1,4 +1,6 @@
 # Imports
+from typing import Optional
+
 from simplejson import dump
 from sodapy import Socrata
 
@@ -12,7 +14,7 @@ EXTRACT_FILE = "../data/inspections.json"
 
 
 # Initializations
-def extract(token, collection, document, limit, extract_file):
+def extract(token: Optional[str], collection: str, document: str, limit: int, extract_file: str) -> None:
     try:
         # Initialize Socrata client
         client = Socrata(collection, token)
