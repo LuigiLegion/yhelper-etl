@@ -1,5 +1,5 @@
 # Imports
-from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos
+from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits
 
 
 # Tests
@@ -179,3 +179,50 @@ class TestIsInvalidGos:
         result = is_invalid_gos(insp)
         # Assert
         assert result is True
+
+
+class TestPhoneDigits:
+    def test_none(self):
+        # Arrange
+        phone = None
+        expected = ""
+        # Act
+        result = phone_digits(phone)
+        # Assert
+        assert result == expected
+
+    def test_empty_string(self):
+        # Arrange
+        phone = ""
+        expected = ""
+        # Act
+        result = phone_digits(phone)
+        # Assert
+        assert result == expected
+
+    def test_symbols(self):
+        # Arrange
+        phone = "#: (123) 456-7890"
+        expected = "1234567890"
+        # Act
+        result = phone_digits(phone)
+        # Assert
+        assert result == expected
+
+    def test_alphanumeric(self):
+        # Arrange
+        phone = "My phone number is 123 456 7890"
+        expected = "1234567890"
+        # Act
+        result = phone_digits(phone)
+        # Assert
+        assert result == expected
+
+    def test_numeric(self):
+        # Arrange
+        phone = "1234567890"
+        expected = "1234567890"
+        # Act
+        result = phone_digits(phone)
+        # Assert
+        assert result == expected
