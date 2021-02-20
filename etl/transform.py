@@ -137,6 +137,8 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
 
     print("Transformation Process Completed Successfully")
 
+    return rests_list
+
 
 if __name__ == "__main__":
     # Transform raw data
