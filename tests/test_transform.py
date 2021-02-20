@@ -1,5 +1,5 @@
 # Imports
-from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits
+from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits
 
 
 # Tests
@@ -224,5 +224,25 @@ class TestPhoneDigits:
         expected = "1234567890"
         # Act
         result = phone_digits(phone)
+        # Assert
+        assert result == expected
+
+
+class TestModDigits:
+    def test_single_digit_mod(self):
+        # Arrange
+        mod = "01"
+        expected = "1"
+        # Act
+        result = mod_digits(mod)
+        # Assert
+        assert result == expected
+
+    def test_double_digit_mod(self):
+        # Arrange
+        mod = "11"
+        expected = "11"
+        # Act
+        result = mod_digits(mod)
         # Assert
         assert result == expected
