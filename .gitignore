@@ -2,6 +2,8 @@
 venv
 __pycache__
 .pytest_cache
+
 secrets/serviceAccountKey.json
 data/restaurants.json
 data/inspections.json
+tests/data/result
