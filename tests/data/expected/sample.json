@@ -1,0 +1,188 @@
+[
+    {
+        "7184403231": {
+            "name": "THE STRAND SMOKE HOUSE",
+            "phone": "7184403231",
+            "building": "25-27",
+            "street": "BROADWAY",
+            "borough": "Queens",
+            "state": "NY",
+            "zip": "11106",
+            "latitude": "40.7633079547",
+            "longitude": "-73.92819546732",
+            "inspections": [
+                {
+                    "date": "2/8/2020",
+                    "grade": "B",
+                    "score": "19",
+                    "violations": [
+                        {
+                            "description": "Evidence of mice or live mice present in facility's food and/or non-food areas.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Sanitized equipment or utensil, including in-use food dispensing utensil, improperly used or stored.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Hot food item not held at or above 140\u00ba F.",
+                            "critical": true
+                        }
+                    ]
+                },
+                {
+                    "date": "1/31/2020",
+                    "grade": null,
+                    "score": "60",
+                    "violations": [
+                        {
+                            "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
+                            "critical": false
+                        },
+                        {
+                            "description": "Hot food item not held at or above 140\u00ba F.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Food contact surface not properly washed, rinsed and sanitized after each use and following any activity when contamination may have occurred.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Cold food item held above 41\u00ba F (smoked fish and reduced oxygen packaged foods above 38 \u00baF) except during necessary preparation.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Evidence of mice or live mice present in facility's food and/or non-food areas.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Food not protected from potential source of contamination during storage, preparation, transportation, display or service.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Facility not vermin proof. Harborage or conditions conducive to attracting vermin to the premises and/or allowing vermin to exist.",
+                            "critical": false
+                        }
+                    ]
+                },
+                {
+                    "date": "8/7/2019",
+                    "grade": "A",
+                    "score": "13",
+                    "violations": [
+                        {
+                            "description": "Hot food item not held at or above 140\u00ba F.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Filth flies or food/refuse/sewage-associated (FRSA) flies present in facility\u2019s food and/or non-food areas. Filth flies include house flies, little house flies, blow flies, bottle flies and flesh flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid flies.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Current letter grade card not posted.",
+                            "critical": false
+                        }
+                    ]
+                },
+                {
+                    "date": "6/6/2019",
+                    "grade": null,
+                    "score": "19",
+                    "violations": [
+                        {
+                            "description": "Facility not vermin proof. Harborage or conditions conducive to attracting vermin to the premises and/or allowing vermin to exist.",
+                            "critical": false
+                        },
+                        {
+                            "description": "Filth flies or food/refuse/sewage-associated (FRSA) flies present in facility\u2019s food and/or non-food areas. Filth flies include house flies, little house flies, blow flies, bottle flies and flesh flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid flies.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Current letter grade card not posted.",
+                            "critical": false
+                        },
+                        {
+                            "description": "Food worker does not use proper utensil to eliminate bare hand contact with food that will not receive adequate additional heat treatment.",
+                            "critical": true
+                        }
+                    ]
+                },
+                {
+                    "date": "10/24/2018",
+                    "grade": "C",
+                    "score": "38",
+                    "violations": [
+                        {
+                            "description": "Food Protection Certificate not held by supervisor of food operations.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Evidence of mice or live mice present in facility's food and/or non-food areas.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Hot food item not held at or above 140\u00ba F.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Facility not vermin proof. Harborage or conditions conducive to attracting vermin to the premises and/or allowing vermin to exist.",
+                            "critical": false
+                        }
+                    ]
+                },
+                {
+                    "date": "3/13/2018",
+                    "grade": null,
+                    "score": "62",
+                    "violations": [
+                        {
+                            "description": "Insufficient or no refrigerated or hot holding equipment to keep potentially hazardous foods at required temperatures.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Facility not vermin proof. Harborage or conditions conducive to attracting vermin to the premises and/or allowing vermin to exist.",
+                            "critical": false
+                        },
+                        {
+                            "description": "Filth flies or food/refuse/sewage-associated (FRSA) flies present in facility\u2019s food and/or non-food areas. Filth flies include house flies, little house flies, blow flies, bottle flies and flesh flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid flies.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Hot food item not held at or above 140\u00ba F.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
+                            "critical": true
+                        },
+                        {
+                            "description": "Food not protected from potential source of contamination during storage, preparation, transportation, display or service.",
+                            "critical": true
+                        }
+                    ]
+                },
+                {
+                    "date": "10/6/2017",
+                    "grade": "A",
+                    "score": "5",
+                    "violations": [
+                        {
+                            "description": "Wiping cloths soiled or not stored in sanitizing solution.",
+                            "critical": true
+                        }
+                    ]
+                },
+                {
+                    "date": "7/17/2017",
+                    "grade": null,
+                    "score": "29",
+                    "violations": []
+                }
+            ]
+        }
+    }
+]
