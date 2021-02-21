@@ -1,7 +1,7 @@
 # Imports
 from simplejson import load
 
-from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits, transform
+from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits, formatted_phone, transform
 
 
 # Tests
@@ -246,6 +246,35 @@ class TestModDigits:
         expected = "11"
         # Act
         result = mod_digits(mod)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedPhone:
+    def test_empty_string(self):
+        # Arrange
+        phone = ""
+        expected = ""
+        # Act
+        result = formatted_phone(phone)
+        # Assert
+        assert result == expected
+
+    def test_ten_digit_phone(self):
+        # Arrange
+        phone = "2345678900"
+        expected = "2345678900"
+        # Act
+        result = formatted_phone(phone)
+        # Assert
+        assert result == expected
+
+    def test_eleven_digit_phone(self):
+        # Arrange
+        phone = "12345678900"
+        expected = "2345678900"
+        # Act
+        result = formatted_phone(phone)
         # Assert
         assert result == expected
 
