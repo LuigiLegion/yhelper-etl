@@ -33,7 +33,7 @@ def mod_digits(mod: str) -> str:
 
 
 def formatted_phone(phone: str) -> str:
-    return phone[1:] if len(phone) == 11 and phone[0] == 1 else phone
+    return phone[1:] if len(phone) == 11 and phone[0] == "1" else phone
 
 
 def formatted_date(date: str) -> str:
