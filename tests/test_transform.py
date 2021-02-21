@@ -1,5 +1,7 @@
 # Imports
-from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits
+from simplejson import load
+
+from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits, transform
 
 
 # Tests
@@ -244,5 +246,21 @@ class TestModDigits:
         expected = "11"
         # Act
         result = mod_digits(mod)
+        # Assert
+        assert result == expected
+
+
+class TestTransform:
+    def test_data_sample(self):
+        # Arrange
+        expected_file = "tests/data/expected/sample.json"
+        extract_file = "tests/data/raw/sample.json"
+        transform_file = "tests/data/result/sample.json"
+
+        with open(expected_file, "r") as f:
+            expected = load(f)
+
+        # Act
+        result = transform(extract_file, transform_file)
         # Assert
         assert result == expected
