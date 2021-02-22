@@ -1,7 +1,16 @@
 # Imports
 from simplejson import load
 
-from etl.transform import is_valid_phone, is_valid_date, is_invalid_gos, phone_digits, mod_digits, formatted_phone, transform
+from etl.transform import (
+    is_valid_phone,
+    is_valid_date,
+    is_invalid_gos,
+    phone_digits,
+    mod_digits,
+    formatted_phone,
+    formatted_date,
+    transform
+)
 
 
 # Tests
@@ -275,6 +284,44 @@ class TestFormattedPhone:
         expected = "2345678900"
         # Act
         result = formatted_phone(phone)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedDate:
+    def test_both_double_digit(self):
+        # Arrange
+        date = "2011-11-11T00:00:00.000"
+        expected = "11/11/2011"
+        # Act
+        result = formatted_date(date)
+        # Assert
+        assert result == expected
+
+    def test_single_digit_day(self):
+        # Arrange
+        date = "2011-11-01T00:00:00.000"
+        expected = "11/1/2011"
+        # Act
+        result = formatted_date(date)
+        # Assert
+        assert result == expected
+
+    def test_single_digit_month(self):
+        # Arrange
+        date = "2011-01-11T00:00:00.000"
+        expected = "1/11/2011"
+        # Act
+        result = formatted_date(date)
+        # Assert
+        assert result == expected
+
+    def test_both_single_digit(self):
+        # Arrange
+        date = "2011-01-01T00:00:00.000"
+        expected = "1/1/2011"
+        # Act
+        result = formatted_date(date)
         # Assert
         assert result == expected
 
