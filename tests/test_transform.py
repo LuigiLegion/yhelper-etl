@@ -9,6 +9,7 @@ from etl.transform import (
     mod_digits,
     formatted_phone,
     formatted_date,
+    formatted_gos,
     transform
 )
 
@@ -322,6 +323,44 @@ class TestFormattedDate:
         expected = "1/1/2011"
         # Act
         result = formatted_date(date)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedGos:
+    def test_none(self):
+        # Arrange
+        gos = None
+        expected = None
+        # Act
+        result = formatted_gos(gos)
+        # Assert
+        assert result == expected
+
+    def test_empty_string(self):
+        # Arrange
+        gos = ""
+        expected = None
+        # Act
+        result = formatted_gos(gos)
+        # Assert
+        assert result == expected
+
+    def test_grade(self):
+        # Arrange
+        gos = "C"
+        expected = "C"
+        # Act
+        result = formatted_gos(gos)
+        # Assert
+        assert result == expected
+
+    def test_score(self):
+        # Arrange
+        gos = "42"
+        expected = "42"
+        # Act
+        result = formatted_gos(gos)
         # Assert
         assert result == expected
 
