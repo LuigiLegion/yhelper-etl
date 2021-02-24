@@ -10,6 +10,7 @@ from etl.transform import (
     formatted_phone,
     formatted_date,
     formatted_gos,
+    formatted_critical,
     transform
 )
 
@@ -361,6 +362,44 @@ class TestFormattedGos:
         expected = "42"
         # Act
         result = formatted_gos(gos)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedCritical:
+    def test_none(self):
+        # Arrange
+        critical = None
+        expected = False
+        # Act
+        result = formatted_critical(critical)
+        # Assert
+        assert result == expected
+
+    def test_empty_string(self):
+        # Arrange
+        critical = ""
+        expected = False
+        # Act
+        result = formatted_critical(critical)
+        # Assert
+        assert result == expected
+
+    def test_not_critical(self):
+        # Arrange
+        critical = "N"
+        expected = False
+        # Act
+        result = formatted_critical(critical)
+        # Assert
+        assert result == expected
+
+    def test_critical(self):
+        # Arrange
+        critical = "Y"
+        expected = True
+        # Act
+        result = formatted_critical(critical)
         # Assert
         assert result == expected
 
