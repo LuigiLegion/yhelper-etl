@@ -14,7 +14,7 @@
                 {
                     "date": "2/8/2020",
                     "grade": "B",
-                    "score": "19",
+                    "score": 19,
                     "violations": [
                         {
                             "description": "Evidence of mice or live mice present in facility's food and/or non-food areas.",
@@ -32,8 +32,8 @@
                 },
                 {
                     "date": "1/31/2020",
-                    "grade": null,
-                    "score": "60",
+                    "grade": "C",
+                    "score": 60,
                     "violations": [
                         {
                             "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
@@ -68,7 +68,7 @@
                 {
                     "date": "8/7/2019",
                     "grade": "A",
-                    "score": "13",
+                    "score": 13,
                     "violations": [
                         {
                             "description": "Hot food item not held at or above 140\u00ba F.",
@@ -86,8 +86,8 @@
                 },
                 {
                     "date": "6/6/2019",
-                    "grade": null,
-                    "score": "19",
+                    "grade": "B",
+                    "score": 19,
                     "violations": [
                         {
                             "description": "Facility not vermin proof. Harborage or conditions conducive to attracting vermin to the premises and/or allowing vermin to exist.",
@@ -110,7 +110,7 @@
                 {
                     "date": "10/24/2018",
                     "grade": "C",
-                    "score": "38",
+                    "score": 38,
                     "violations": [
                         {
                             "description": "Food Protection Certificate not held by supervisor of food operations.",
@@ -136,8 +136,8 @@
                 },
                 {
                     "date": "3/13/2018",
-                    "grade": null,
-                    "score": "62",
+                    "grade": "C",
+                    "score": 62,
                     "violations": [
                         {
                             "description": "Insufficient or no refrigerated or hot holding equipment to keep potentially hazardous foods at required temperatures.",
@@ -168,7 +168,7 @@
                 {
                     "date": "10/6/2017",
                     "grade": "A",
-                    "score": "5",
+                    "score": 5,
                     "violations": [
                         {
                             "description": "Wiping cloths soiled or not stored in sanitizing solution.",
@@ -178,8 +178,8 @@
                 },
                 {
                     "date": "7/17/2017",
-                    "grade": null,
-                    "score": "29",
+                    "grade": "C",
+                    "score": 29,
                     "violations": []
                 }
             ]
