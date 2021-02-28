@@ -4,12 +4,10 @@ from simplejson import load
 from etl.transform import (
     is_valid_phone,
     is_valid_date,
-    is_invalid_gos,
     phone_digits,
     mod_digits,
     formatted_phone,
     formatted_date,
-    formatted_gos,
     formatted_critical,
     transform
 )
@@ -104,92 +102,6 @@ class TestIsValidDate:
         date = "2020-01-31T00:00:00.000"
         # Act
         result = is_valid_date(date)
-        # Assert
-        assert result is True
-
-
-class TestIsInvalidGos:
-    def test_both_not_none(self):
-        # Arrange
-        insp = {
-            "grade": "A",
-            "score": "0",
-        }
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is False
-
-    def test_grade_none(self):
-        # Arrange
-        insp = {
-            "grade": None,
-            "score": "0",
-        }
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_score_none(self):
-        # Arrange
-        insp = {
-            "grade": "A",
-            "score": None,
-        }
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_both_none(self):
-        # Arrange
-        insp = {
-            "grade": None,
-            "score": None,
-        }
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_grade_missing_score_not_none(self):
-        # Arrange
-        insp = {"score": "0"}
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_grade_missing_score_none(self):
-        # Arrange
-        insp = {"score": None}
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_score_missing_grade_not_none(self):
-        # Arrange
-        insp = {"grade": "A"}
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_score_missing_grade_none(self):
-        # Arrange
-        insp = {"grade": None}
-        # Act
-        result = is_invalid_gos(insp)
-        # Assert
-        assert result is True
-
-    def test_both_missing(self):
-        # Arrange
-        insp = {}
-        # Act
-        result = is_invalid_gos(insp)
         # Assert
         assert result is True
 
@@ -324,44 +236,6 @@ class TestFormattedDate:
         expected = "1/1/2011"
         # Act
         result = formatted_date(date)
-        # Assert
-        assert result == expected
-
-
-class TestFormattedGos:
-    def test_none(self):
-        # Arrange
-        gos = None
-        expected = None
-        # Act
-        result = formatted_gos(gos)
-        # Assert
-        assert result == expected
-
-    def test_empty_string(self):
-        # Arrange
-        gos = ""
-        expected = None
-        # Act
-        result = formatted_gos(gos)
-        # Assert
-        assert result == expected
-
-    def test_grade(self):
-        # Arrange
-        gos = "C"
-        expected = "C"
-        # Act
-        result = formatted_gos(gos)
-        # Assert
-        assert result == expected
-
-    def test_score(self):
-        # Arrange
-        gos = "42"
-        expected = "42"
-        # Act
-        result = formatted_gos(gos)
         # Assert
         assert result == expected
 
