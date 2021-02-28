@@ -5,6 +5,7 @@ from etl.transform import (
     is_valid_phone,
     is_valid_date,
     is_valid_score,
+    is_valid_grade,
     phone_digits,
     mod_digits,
     formatted_phone,
@@ -145,6 +146,80 @@ class TestIsValidScore:
         score = "42"
         # Act
         result = is_valid_score(score)
+        # Assert
+        assert result is True
+
+
+class TestIsValidGrade:
+    def test_none(self):
+        # Arrange
+        grade = None
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_empty_string(self):
+        # Arrange
+        grade = ""
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_g_grade(self):
+        # Arrange
+        grade = "G"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_n_grade(self):
+        # Arrange
+        grade = "N"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_p_grade(self):
+        # Arrange
+        grade = "P"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_z_grade(self):
+        # Arrange
+        grade = "Z"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is False
+
+    def test_a_grade(self):
+        # Arrange
+        grade = "A"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is True
+
+    def test_b_grade(self):
+        # Arrange
+        grade = "B"
+        # Act
+        result = is_valid_grade(grade)
+        # Assert
+        assert result is True
+
+    def test_c_grade(self):
+        # Arrange
+        grade = "C"
+        # Act
+        result = is_valid_grade(grade)
         # Assert
         assert result is True
 
