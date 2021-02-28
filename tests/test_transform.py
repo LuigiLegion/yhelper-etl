@@ -4,6 +4,7 @@ from simplejson import load
 from etl.transform import (
     is_valid_phone,
     is_valid_date,
+    is_valid_score,
     phone_digits,
     mod_digits,
     formatted_phone,
@@ -102,6 +103,48 @@ class TestIsValidDate:
         date = "2020-01-31T00:00:00.000"
         # Act
         result = is_valid_date(date)
+        # Assert
+        assert result is True
+
+
+class TestIsValidScore:
+    def test_none(self):
+        # Arrange
+        score = None
+        # Act
+        result = is_valid_score(score)
+        # Assert
+        assert result is False
+
+    def test_empty_string(self):
+        # Arrange
+        score = ""
+        # Act
+        result = is_valid_score(score)
+        # Assert
+        assert result is False
+
+    def test_negative_score(self):
+        # Arrange
+        score = "-1"
+        # Act
+        result = is_valid_score(score)
+        # Assert
+        assert result is False
+
+    def test_zero_score(self):
+        # Arrange
+        score = "0"
+        # Act
+        result = is_valid_score(score)
+        # Assert
+        assert result is True
+
+    def test_positive_score(self):
+        # Arrange
+        score = "42"
+        # Act
+        result = is_valid_score(score)
         # Assert
         assert result is True
 
