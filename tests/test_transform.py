@@ -10,6 +10,7 @@ from etl.transform import (
     mod_digits,
     formatted_phone,
     formatted_date,
+    formatted_score,
     formatted_critical,
     transform
 )
@@ -354,6 +355,50 @@ class TestFormattedDate:
         expected = "1/1/2011"
         # Act
         result = formatted_date(date)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedScore:
+    def test_none(self):
+        # Arrange
+        score = None
+        # Act
+        result = formatted_score(score)
+        # Assert
+        assert result is None
+
+    def test_empty_string(self):
+        # Arrange
+        score = ""
+        # Act
+        result = formatted_score(score)
+        # Assert
+        assert result is None
+
+    def test_negative_score(self):
+        # Arrange
+        score = "-1"
+        # Act
+        result = formatted_score(score)
+        # Assert
+        assert result is None
+
+    def test_zero_score(self):
+        # Arrange
+        score = "0"
+        expected = 0
+        # Act
+        result = formatted_score(score)
+        # Assert
+        assert result == expected
+
+    def test_positive_score(self):
+        # Arrange
+        score = "42"
+        expected = 42
+        # Act
+        result = formatted_score(score)
         # Assert
         assert result == expected
 
