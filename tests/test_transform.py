@@ -12,6 +12,7 @@ from etl.transform import (
     formatted_phone,
     formatted_date,
     formatted_score,
+    formatted_grade,
     formatted_critical,
     transform
 )
@@ -456,6 +457,47 @@ class TestFormattedScore:
         expected = 42
         # Act
         result = formatted_score(score)
+        # Assert
+        assert result == expected
+
+
+class TestFormattedGrade:
+    def test_both_none(self):
+        # Arrange
+        grade = None
+        score = None
+        # Act
+        result = formatted_grade(grade, score)
+        # Assert
+        assert result is None
+
+    def test_both_not_none(self):
+        # Arrange
+        grade = "C"
+        score = 42
+        expected = "C"
+        # Act
+        result = formatted_grade(grade, score)
+        # Assert
+        assert result == expected
+
+    def test_score_none(self):
+        # Arrange
+        grade = "C"
+        score = None
+        expected = "C"
+        # Act
+        result = formatted_grade(grade, score)
+        # Assert
+        assert result == expected
+
+    def test_grade_none(self):
+        # Arrange
+        grade = None
+        score = 42
+        expected = "C"
+        # Act
+        result = formatted_grade(grade, score)
         # Assert
         assert result == expected
 
