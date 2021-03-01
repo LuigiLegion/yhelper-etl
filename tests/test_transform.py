@@ -8,6 +8,7 @@ from etl.transform import (
     is_valid_grade,
     phone_digits,
     mod_digits,
+    grade_by_score,
     formatted_phone,
     formatted_date,
     formatted_score,
@@ -288,6 +289,62 @@ class TestModDigits:
         expected = "11"
         # Act
         result = mod_digits(mod)
+        # Assert
+        assert result == expected
+
+
+class TestGradeByScore:
+    def test_a_grade_highest_score(self):
+        # Arrange
+        score = 0
+        expected = "A"
+        # Act
+        result = grade_by_score(score)
+        # Assert
+        assert result == expected
+
+    def test_a_grade_lowest_score(self):
+        # Arrange
+        score = 13
+        expected = "A"
+        # Act
+        result = grade_by_score(score)
+        # Assert
+        assert result == expected
+
+    def test_b_grade_highest_score(self):
+        # Arrange
+        score = 14
+        expected = "B"
+        # Act
+        result = grade_by_score(score)
+        # Assert
+        assert result == expected
+
+    def test_b_grade_lowest_score(self):
+        # Arrange
+        score = 27
+        expected = "B"
+        # Act
+        result = grade_by_score(score)
+        # Assert
+        assert result == expected
+
+    def test_c_grade_highest_score(self):
+        # Arrange
+        score = 28
+        expected = "C"
+        # Act
+        result = grade_by_score(score)
+        # Assert
+        assert result == expected
+
+    def test_c_grade_score(self):
+        # Arrange
+        score = 42
+        expected = "C"
+        # Act
+        result = grade_by_score(score)
         # Assert
         assert result == expected
 
