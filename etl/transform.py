@@ -12,24 +12,39 @@ TRANSFORM_FILE = "../data/restaurants.json"
 
 
 # Initializations
-def is_valid_phone(phone: str) -> bool:
-    return bool(phone) and len(phone) == 10 and phone[0] != "0"
+def is_valid_phone(phone: Optional[str]) -> bool:
+    return isinstance(phone, str) and len(phone) == 10 and phone[0] != "0"
 
 
-def is_valid_date(date: str) -> bool:
-    return bool(date) and date != "1900-01-01T00:00:00.000"
+def is_valid_date(date: Optional[str]) -> bool:
+    return isinstance(date, str) and bool(date) and date != "1900-01-01T00:00:00.000"
 
 
-def is_invalid_gos(insp: dict) -> bool:
-    return insp.get("grade") is None or insp.get("score") is None
+def is_valid_score(score: Optional[str]) -> bool:
+    return isinstance(score, str) and str.isnumeric(score)
 
 
-def phone_digits(phone: str) -> str:
-    return "".join(re.findall(r"\d+", phone)) if phone else ""
+def is_valid_grade(grade: Optional[str]) -> bool:
+    return grade == "A" or grade == "B" or grade == "C"
+
+
+def phone_digits(phone: Optional[str]) -> str:
+    return "".join(re.findall(r"\d+", phone)) if isinstance(phone, str) else ""
 
 
 def mod_digits(mod: str) -> str:
     return mod[1] if mod[0] == "0" else mod
+
+
+def grade_by_score(score: int) -> str:
+    if 0 <= score <= 13:
+        return "A"
+
+    elif 14 <= score <= 27:
+        return "B"
+
+    else:
+        return "C"
 
 
 def formatted_phone(phone: str) -> str:
@@ -40,11 +55,22 @@ def formatted_date(date: str) -> str:
     return mod_digits(date[5:7]) + "/" + mod_digits(date[8:10]) + "/" + date[:4]
 
 
-def formatted_gos(gos: str) -> Optional[str]:
-    return gos if gos else None
+def formatted_score(score: Optional[str]) -> Optional[int]:
+    return int(score) if is_valid_score(score) else None
 
 
-def formatted_critical(critical: str) -> bool:
+def formatted_grade(grade: Optional[str], score: Optional[int]) -> Optional[str]:
+    if is_valid_grade(grade):
+        return grade
+
+    elif score is not None:
+        return grade_by_score(score)
+
+    else:
+        return None
+
+
+def formatted_critical(critical: Optional[str]) -> bool:
     return True if critical == "Y" else False
 
 
@@ -56,10 +82,12 @@ def violation(datum: dict) -> dict:
 
 
 def inspection(datum: dict) -> dict:
+    score = formatted_score(datum.get("score"))
+
     return {
         "date": datum.get("inspection_date"),
-        "grade": formatted_gos(datum.get("grade")),
-        "score": formatted_gos(datum.get("score")),
+        "score": score,
+        "grade": formatted_grade(datum.get("grade"), score),
         "violations": [violation(datum)] if datum.get("violation_description") else []
     }
 
@@ -102,13 +130,13 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
                         viol = violation(datum)
                         insp.get("violations").append(viol)
 
-                    if is_invalid_gos(insp):
-                        grade = formatted_gos(datum.get("grade"))
-                        score = formatted_gos(datum.get("score"))
+                    if insp.get("score") is None:
+                        score = formatted_score(datum.get("score"))
+                        grade = formatted_grade(datum.get("grade"), score)
 
-                        if grade and score:
-                            insp["grade"] = grade
+                        if score and grade:
                             insp["score"] = score
+                            insp["grade"] = grade
 
                 else:
                     insps[date] = inspection(datum)
@@ -130,7 +158,7 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("total valid restaurants: ", len(rests_list))  # 24318
+    print("total valid restaurants: ", len(rests_list))  # 24258
 
     with open(transform_file, "w") as tf:
         dump(rests_list, tf, indent=4)
