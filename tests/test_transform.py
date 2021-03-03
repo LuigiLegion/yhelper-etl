@@ -14,6 +14,7 @@ from etl.transform import (
     formatted_score,
     formatted_grade,
     formatted_critical,
+    violation,
     transform
 )
 
@@ -536,6 +537,74 @@ class TestFormattedCritical:
         expected = True
         # Act
         result = formatted_critical(critical)
+        # Assert
+        assert result == expected
+
+
+class TestViolation:
+    def test_empty_dict(self):
+        # Arrange
+        datum = {}
+        expected = {
+            "description": None,
+            "critical": False
+        }
+        # Act
+        result = violation(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_description(self):
+        # Arrange
+        datum = {"critical_flag": "N"}
+        expected = {
+            "description": None,
+            "critical": False
+        }
+        # Act
+        result = violation(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_critical(self):
+        # Arrange
+        datum = {"violation_description": "Current letter grade card not posted."}
+        expected = {
+            "description": "Current letter grade card not posted.",
+            "critical": False
+        }
+        # Act
+        result = violation(datum)
+        # Assert
+        assert result == expected
+
+    def test_non_critical_violation(self):
+        # Arrange
+        datum = {
+            "violation_description": "Current letter grade card not posted.",
+            "critical_flag": "N"
+        }
+        expected = {
+            "description": "Current letter grade card not posted.",
+            "critical": False
+        }
+        # Act
+        result = violation(datum)
+        # Assert
+        assert result == expected
+
+    def test_critical_violation(self):
+        # Arrange
+        datum = {
+            "violation_description": "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "description": "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
+            "critical": True
+        }
+        # Act
+        result = violation(datum)
         # Assert
         assert result == expected
 
