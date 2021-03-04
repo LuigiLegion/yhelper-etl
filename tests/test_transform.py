@@ -15,6 +15,7 @@ from etl.transform import (
     formatted_grade,
     formatted_critical,
     violation,
+    inspection,
     transform
 )
 
@@ -605,6 +606,162 @@ class TestViolation:
         }
         # Act
         result = violation(datum)
+        # Assert
+        assert result == expected
+
+
+class TestInspection:
+    def test_empty_dict(self):
+        # Arrange
+        datum = {}
+        expected = {
+            "date": None,
+            "score": None,
+            "grade": None,
+            "violations": []
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_inspection_date(self):
+        # Arrange
+        datum = {
+            "score": "38",
+            "grade": "C",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "date": None,
+            "score": 38,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                    "critical": True
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_score(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "grade": "C",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "date": "2018-10-24T00:00:00.000",
+            "score": None,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                    "critical": True
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_grade(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "score": "38",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "date": "2018-10-24T00:00:00.000",
+            "score": 38,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                    "critical": True
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_violation_description(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "score": "38",
+            "grade": "C",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "date": "2018-10-24T00:00:00.000",
+            "score": 38,
+            "grade": "C",
+            "violations": []
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_no_critical_flag(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "score": "38",
+            "grade": "C",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site."
+        }
+        expected = {
+            "date": "2018-10-24T00:00:00.000",
+            "score": 38,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                    "critical": False
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_inspection_with_critical_violation(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "score": "38",
+            "grade": "C",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+            "critical_flag": "Y"
+        }
+        expected = {
+            "date": "2018-10-24T00:00:00.000",
+            "score": 38,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                    "critical": True
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
         # Assert
         assert result == expected
 
