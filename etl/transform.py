@@ -108,7 +108,7 @@ def restaurant(datum: dict, date: str) -> dict:
 
 
 def transform(extract_file: str, transform_file: str) -> List[dict]:
-    # Create extract_file before running this
+    # Load inspections data from file
     with open(extract_file, "r") as ef:
         data = load(ef)
 
@@ -160,6 +160,7 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
     # Print number of restaurants with valid inspections in dataset
     print("total valid restaurants: ", len(rests_list))  # 24258
 
+    # Dump restaurants data to file
     with open(transform_file, "w") as tf:
         dump(rests_list, tf, indent=4)
 

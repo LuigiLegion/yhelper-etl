@@ -21,9 +21,11 @@ def extract(token: Optional[str], collection: str, document: str, limit: int, ex
 
         # Extract data from document
         data = client.get(document, limit=limit)
+
         # Print number of inspections in dataset
         print("total inspections: ", len(data))  # 396020
 
+        # Dump inspections data to file
         with open(extract_file, "w") as f:
             dump(data, f, indent=4)
 

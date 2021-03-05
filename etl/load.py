@@ -29,7 +29,7 @@ def load(transform_file: str, sak_file: str, collection: str, limit: int, cycle:
         firebase_admin.initialize_app(cred)
         db = firestore.client()
 
-        # Create transform_file before running this
+        # Load restaurants data from file
         with open(transform_file, "r") as f:
             data = simplejson.load(f)
 
