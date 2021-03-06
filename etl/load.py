@@ -8,7 +8,7 @@ from firebase_admin import credentials, firestore
 
 # Constants
 TRANSFORM_FILE = "../data/restaurants.json"
-FIRESTORE_SAK_FILE = "secrets/serviceAccountKey.json"
+FIRESTORE_SAK_FILE = "secrets/service-account-key.json"
 FIRESTORE_COLLECTION = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0
