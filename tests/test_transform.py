@@ -741,7 +741,7 @@ class TestInspection:
         # Assert
         assert result == expected
 
-    def test_inspection_with_critical_violation(self):
+    def test_inspection_with_grade_and_critical_violation(self):
         # Arrange
         datum = {
             "inspection_date": "2018-10-24T00:00:00.000",
@@ -758,6 +758,30 @@ class TestInspection:
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
                     "critical": True
+                }
+            ]
+        }
+        # Act
+        result = inspection(datum)
+        # Assert
+        assert result == expected
+
+    def test_inspection_with_no_grade_and_non_critical_violation(self):
+        # Arrange
+        datum = {
+            "inspection_date": "2020-01-31T00:00:00.000",
+            "score": "60",
+            "violation_description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
+            "critical_flag": "N"
+        }
+        expected = {
+            "date": "2020-01-31T00:00:00.000",
+            "score": 60,
+            "grade": "C",
+            "violations": [
+                {
+                    "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
+                    "critical": False
                 }
             ]
         }
