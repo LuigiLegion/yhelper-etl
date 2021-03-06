@@ -16,6 +16,7 @@ from etl.transform import (
     formatted_critical,
     violation,
     inspection,
+    restaurant,
     transform
 )
 
@@ -762,6 +763,129 @@ class TestInspection:
         }
         # Act
         result = inspection(datum)
+        # Assert
+        assert result == expected
+
+
+class TestRestaurant:
+    def test_empty_dict(self):
+        # Arrange
+        datum = {}
+        date = "2015-10-21T00:00:00.000"
+        expected = {
+            "name": None,
+            "phone": None,
+            "building": None,
+            "street": None,
+            "borough": None,
+            "state": "NY",
+            "zip": None,
+            "latitude": None,
+            "longitude": None,
+            "inspections": {
+                "2015-10-21T00:00:00.000": {
+                    "date": None,
+                    "score": None,
+                    "grade": None,
+                    "violations": []
+                }
+            }
+        }
+        # Act
+        result = restaurant(datum, date)
+        # Assert
+        assert result == expected
+
+    def test_inspection_with_grade_and_critical_violation(self):
+        # Arrange
+        datum = {
+            "dba": "THE STRAND SMOKE HOUSE",
+            "boro": "Queens",
+            "building": "25-27",
+            "street": "BROADWAY",
+            "zipcode": "11106",
+            "phone": "7184403231",
+            "inspection_date": "2018-10-24T00:00:00.000",
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+            "critical_flag": "Y",
+            "score": "38",
+            "grade": "C",
+            "latitude": "40.7633079547",
+            "longitude": "-73.92819546732",
+        }
+        date = "2018-10-24T00:00:00.000"
+        expected = {
+            "name": "THE STRAND SMOKE HOUSE",
+            "phone": "7184403231",
+            "building": "25-27",
+            "street": "BROADWAY",
+            "borough": "Queens",
+            "state": "NY",
+            "zip": "11106",
+            "latitude": "40.7633079547",
+            "longitude": "-73.92819546732",
+            "inspections": {
+                "2018-10-24T00:00:00.000": {
+                    "date": "2018-10-24T00:00:00.000",
+                    "score": 38,
+                    "grade": "C",
+                    "violations": [
+                        {
+                            "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
+                            "critical": True
+                        }
+                    ]
+                }
+            }
+        }
+        # Act
+        result = restaurant(datum, date)
+        # Assert
+        assert result == expected
+
+    def test_inspection_with_no_grade_and_non_critical_violation(self):
+        # Arrange
+        datum = {
+            "dba": "THE STRAND SMOKE HOUSE",
+            "boro": "Queens",
+            "building": "25-27",
+            "street": "BROADWAY",
+            "zipcode": "11106",
+            "phone": "7184403231",
+            "inspection_date": "2020-01-31T00:00:00.000",
+            "violation_description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
+            "critical_flag": "N",
+            "score": "60",
+            "latitude": "40.7633079547",
+            "longitude": "-73.92819546732",
+        }
+        date = "2020-01-31T00:00:00.000"
+        expected = {
+            "name": "THE STRAND SMOKE HOUSE",
+            "phone": "7184403231",
+            "building": "25-27",
+            "street": "BROADWAY",
+            "borough": "Queens",
+            "state": "NY",
+            "zip": "11106",
+            "latitude": "40.7633079547",
+            "longitude": "-73.92819546732",
+            "inspections": {
+                "2020-01-31T00:00:00.000": {
+                    "date": "2020-01-31T00:00:00.000",
+                    "score": 60,
+                    "grade": "C",
+                    "violations": [
+                        {
+                            "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
+                            "critical": False
+                        }
+                    ]
+                }
+            }
+        }
+        # Act
+        result = restaurant(datum, date)
         # Assert
         assert result == expected
 
