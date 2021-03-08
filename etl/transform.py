@@ -59,7 +59,10 @@ def formatted_score(score: Optional[str]) -> Optional[int]:
     return int(score) if is_valid_score(score) else None
 
 
-def formatted_grade(grade: Optional[str], score: Optional[int]) -> Optional[str]:
+def formatted_grade(
+    grade: Optional[str],
+    score: Optional[int],
+) -> Optional[str]:
     if is_valid_grade(grade):
         return grade
 
@@ -77,7 +80,7 @@ def formatted_critical(critical: Optional[str]) -> bool:
 def violation(datum: dict) -> dict:
     return {
         "description": datum.get("violation_description"),
-        "critical": formatted_critical(datum.get("critical_flag"))
+        "critical": formatted_critical(datum.get("critical_flag")),
     }
 
 
@@ -88,7 +91,7 @@ def inspection(datum: dict) -> dict:
         "date": datum.get("inspection_date"),
         "score": score,
         "grade": formatted_grade(datum.get("grade"), score),
-        "violations": [violation(datum)] if datum.get("violation_description") else []
+        "violations": [violation(datum)] if datum.get("violation_description") else [],
     }
 
 
@@ -103,7 +106,7 @@ def restaurant(datum: dict, date: str) -> dict:
         "zip": datum.get("zipcode"),
         "latitude": datum.get("latitude"),
         "longitude": datum.get("longitude"),
-        "inspections": {date: inspection(datum)}
+        "inspections": {date: inspection(datum)},
     }
 
 
@@ -158,7 +161,7 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("total valid restaurants: ", len(rests_list))  # 24258
+    print("total valid restaurants: ", len(rests_list))  # 24252
 
     # Dump restaurants data to file
     with open(transform_file, "w") as tf:

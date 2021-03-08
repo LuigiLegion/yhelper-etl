@@ -19,7 +19,13 @@ def file_path(file_name: str) -> str:
     return f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/{file_name}"
 
 
-def load(transform_file: str, sak_file: str, collection: str, limit: int, cycle: int) -> None:
+def load(
+    transform_file: str,
+    sak_file: str,
+    collection: str,
+    limit: int,
+    cycle: int,
+) -> None:
     try:
         # Determine Firestore service account key file path
         path = file_path(sak_file)
@@ -59,4 +65,10 @@ def load(transform_file: str, sak_file: str, collection: str, limit: int, cycle:
 
 if __name__ == "__main__":
     # Load transformed data to Firestore
-    load(TRANSFORM_FILE, FIRESTORE_SAK_FILE, FIRESTORE_COLLECTION, FIRESTORE_RECORD_LIMIT, FIRESTORE_LOAD_CYCLE)
+    load(
+        TRANSFORM_FILE,
+        FIRESTORE_SAK_FILE,
+        FIRESTORE_COLLECTION,
+        FIRESTORE_RECORD_LIMIT,
+        FIRESTORE_LOAD_CYCLE,
+    )

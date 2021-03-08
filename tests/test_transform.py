@@ -17,7 +17,7 @@ from etl.transform import (
     violation,
     inspection,
     restaurant,
-    transform
+    transform,
 )
 
 
@@ -549,7 +549,7 @@ class TestViolation:
         datum = {}
         expected = {
             "description": None,
-            "critical": False
+            "critical": False,
         }
         # Act
         result = violation(datum)
@@ -561,7 +561,7 @@ class TestViolation:
         datum = {"critical_flag": "N"}
         expected = {
             "description": None,
-            "critical": False
+            "critical": False,
         }
         # Act
         result = violation(datum)
@@ -573,7 +573,7 @@ class TestViolation:
         datum = {"violation_description": "Current letter grade card not posted."}
         expected = {
             "description": "Current letter grade card not posted.",
-            "critical": False
+            "critical": False,
         }
         # Act
         result = violation(datum)
@@ -584,11 +584,11 @@ class TestViolation:
         # Arrange
         datum = {
             "violation_description": "Current letter grade card not posted.",
-            "critical_flag": "N"
+            "critical_flag": "N",
         }
         expected = {
             "description": "Current letter grade card not posted.",
-            "critical": False
+            "critical": False,
         }
         # Act
         result = violation(datum)
@@ -599,11 +599,11 @@ class TestViolation:
         # Arrange
         datum = {
             "violation_description": "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "description": "Raw, cooked or prepared food is adulterated, contaminated, cross-contaminated, or not discarded in accordance with HACCP plan.",
-            "critical": True
+            "critical": True,
         }
         # Act
         result = violation(datum)
@@ -619,7 +619,7 @@ class TestInspection:
             "date": None,
             "score": None,
             "grade": None,
-            "violations": []
+            "violations": [],
         }
         # Act
         result = inspection(datum)
@@ -632,7 +632,7 @@ class TestInspection:
             "score": "38",
             "grade": "C",
             "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "date": None,
@@ -641,9 +641,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                    "critical": True
-                }
-            ]
+                    "critical": True,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -656,7 +656,7 @@ class TestInspection:
             "inspection_date": "2018-10-24T00:00:00.000",
             "grade": "C",
             "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "date": "2018-10-24T00:00:00.000",
@@ -665,9 +665,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                    "critical": True
-                }
-            ]
+                    "critical": True,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -680,7 +680,7 @@ class TestInspection:
             "inspection_date": "2018-10-24T00:00:00.000",
             "score": "38",
             "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "date": "2018-10-24T00:00:00.000",
@@ -689,9 +689,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                    "critical": True
-                }
-            ]
+                    "critical": True,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -704,13 +704,13 @@ class TestInspection:
             "inspection_date": "2018-10-24T00:00:00.000",
             "score": "38",
             "grade": "C",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "date": "2018-10-24T00:00:00.000",
             "score": 38,
             "grade": "C",
-            "violations": []
+            "violations": [],
         }
         # Act
         result = inspection(datum)
@@ -723,7 +723,7 @@ class TestInspection:
             "inspection_date": "2018-10-24T00:00:00.000",
             "score": "38",
             "grade": "C",
-            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site."
+            "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
         }
         expected = {
             "date": "2018-10-24T00:00:00.000",
@@ -732,9 +732,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                    "critical": False
-                }
-            ]
+                    "critical": False,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -748,7 +748,7 @@ class TestInspection:
             "score": "38",
             "grade": "C",
             "violation_description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-            "critical_flag": "Y"
+            "critical_flag": "Y",
         }
         expected = {
             "date": "2018-10-24T00:00:00.000",
@@ -757,9 +757,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                    "critical": True
-                }
-            ]
+                    "critical": True,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -772,7 +772,7 @@ class TestInspection:
             "inspection_date": "2020-01-31T00:00:00.000",
             "score": "60",
             "violation_description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
-            "critical_flag": "N"
+            "critical_flag": "N",
         }
         expected = {
             "date": "2020-01-31T00:00:00.000",
@@ -781,9 +781,9 @@ class TestInspection:
             "violations": [
                 {
                     "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
-                    "critical": False
-                }
-            ]
+                    "critical": False,
+                },
+            ],
         }
         # Act
         result = inspection(datum)
@@ -811,9 +811,9 @@ class TestRestaurant:
                     "date": None,
                     "score": None,
                     "grade": None,
-                    "violations": []
-                }
-            }
+                    "violations": [],
+                },
+            },
         }
         # Act
         result = restaurant(datum, date)
@@ -856,11 +856,11 @@ class TestRestaurant:
                     "violations": [
                         {
                             "description": "Food from unapproved or unknown source or home canned. Reduced oxygen packaged (ROP) fish not frozen before processing; or ROP foods prepared on premises transported to another site.",
-                            "critical": True
-                        }
-                    ]
-                }
-            }
+                            "critical": True,
+                        },
+                    ],
+                },
+            },
         }
         # Act
         result = restaurant(datum, date)
@@ -902,11 +902,11 @@ class TestRestaurant:
                     "violations": [
                         {
                             "description": "Plumbing not properly installed or maintained; anti-siphonage or backflow prevention device not provided where required; equipment or floor not properly drained; sewage disposal system in disrepair or not functioning properly.",
-                            "critical": False
-                        }
-                    ]
-                }
-            }
+                            "critical": False,
+                        },
+                    ],
+                },
+            },
         }
         # Act
         result = restaurant(datum, date)

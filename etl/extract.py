@@ -14,7 +14,13 @@ EXTRACT_FILE = "../data/inspections.json"
 
 
 # Initializations
-def extract(token: Optional[str], collection: str, document: str, limit: int, extract_file: str) -> None:
+def extract(
+    token: Optional[str],
+    collection: str,
+    document: str,
+    limit: int,
+    extract_file: str,
+) -> None:
     try:
         # Initialize Socrata client
         client = Socrata(collection, token)
@@ -23,7 +29,7 @@ def extract(token: Optional[str], collection: str, document: str, limit: int, ex
         data = client.get(document, limit=limit)
 
         # Print number of inspections in dataset
-        print("total inspections: ", len(data))  # 396020
+        print("total inspections: ", len(data))  # 395980
 
         # Dump inspections data to file
         with open(extract_file, "w") as f:
@@ -39,4 +45,10 @@ def extract(token: Optional[str], collection: str, document: str, limit: int, ex
 
 if __name__ == "__main__":
     # Extract raw data from Socrata
-    extract(SOCARTA_TOKEN, SOCRATA_COLLECTION, SOCRATA_DOCUMENT, SOCRATA_RECORD_LIMIT, EXTRACT_FILE)
+    extract(
+        SOCARTA_TOKEN,
+        SOCRATA_COLLECTION,
+        SOCRATA_DOCUMENT,
+        SOCRATA_RECORD_LIMIT,
+        EXTRACT_FILE,
+    )
