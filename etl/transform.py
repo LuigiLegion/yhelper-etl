@@ -161,7 +161,7 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
         rests_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print("total valid restaurants: ", len(rests_list))  # 24252
+    print(f"total restaurants count: {len(rests_list)}")  # 24252
 
     # Dump restaurants data to file
     with open(transform_file, "w") as tf:

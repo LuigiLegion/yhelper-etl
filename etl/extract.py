@@ -29,7 +29,7 @@ def extract(
         data = client.get(document, limit=limit)
 
         # Print number of inspections in dataset
-        print("total inspections: ", len(data))  # 395980
+        print(f"total inspections count: {len(data)}")  # 395980
 
         # Dump inspections data to file
         with open(extract_file, "w") as f:
