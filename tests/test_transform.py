@@ -18,6 +18,7 @@ from etl.transform import (
     formatted_critical,
     grades,
     unix_time,
+    utc_time_object,
     violation,
     inspection,
     restaurant,
@@ -568,6 +569,17 @@ class TestUnixTime:
         expected = 1445385600.0
         # Act
         result = unix_time(utc_time_obj)
+        # Assert
+        assert result == expected
+
+
+class TestUtcTimeObject:
+    def test_utc_time_object(self):
+        # Arrange
+        utc_timestamp = "2015-10-21T00:00:00.000"
+        expected = datetime(2015, 10, 21, 0, 0)
+        # Act
+        result = utc_time_object(utc_timestamp)
         # Assert
         assert result == expected
 
