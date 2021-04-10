@@ -14,6 +14,7 @@ from etl.transform import (
     formatted_score,
     formatted_grade,
     formatted_critical,
+    grades,
     violation,
     inspection,
     restaurant,
@@ -539,6 +540,20 @@ class TestFormattedCritical:
         expected = True
         # Act
         result = formatted_critical(critical)
+        # Assert
+        assert result == expected
+
+
+class TestGrades:
+    def test_grades(self):
+        # Arrange
+        expected = {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+        }
+        # Act
+        result = grades()
         # Assert
         assert result == expected
 
