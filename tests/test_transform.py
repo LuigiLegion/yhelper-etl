@@ -1,4 +1,6 @@
 # Imports
+from datetime import datetime
+
 from simplejson import load
 
 from etl.transform import (
@@ -15,6 +17,7 @@ from etl.transform import (
     formatted_grade,
     formatted_critical,
     grades,
+    unix_time,
     violation,
     inspection,
     restaurant,
@@ -554,6 +557,17 @@ class TestGrades:
         }
         # Act
         result = grades()
+        # Assert
+        assert result == expected
+
+
+class TestUnixTime:
+    def test_unix_time(self):
+        # Arrange
+        utc_time_obj = datetime.strptime("2015-10-21T00:00:00.000", "%Y-%m-%dT%H:%M:%S.%f")
+        expected = 1445385600.0
+        # Act
+        result = unix_time(utc_time_obj)
         # Assert
         assert result == expected
 
