@@ -1,5 +1,6 @@
 # Imports
 from datetime import datetime
+from decimal import Decimal
 
 from simplejson import load
 
@@ -19,6 +20,7 @@ from etl.transform import (
     grades,
     unix_time,
     utc_time_object,
+    truncated_decimal,
     violation,
     inspection,
     restaurant,
@@ -580,6 +582,44 @@ class TestUtcTimeObject:
         expected = datetime(2015, 10, 21, 0, 0)
         # Act
         result = utc_time_object(utc_timestamp)
+        # Assert
+        assert result == expected
+
+
+class TestTruncatedDecimal:
+    def test_int(self):
+        # Arrange
+        decimal = 42
+        expected = Decimal("42.0")
+        # Act
+        result = truncated_decimal(decimal, scale=2)
+        # Assert
+        assert result == expected
+
+    def test_float_round_down_below_half_point(self):
+        # Arrange
+        decimal = 3.1415926535
+        expected = Decimal("3.14")
+        # Act
+        result = truncated_decimal(decimal, scale=2)
+        # Assert
+        assert result == expected
+
+    def test_float_round_up_on_half_point(self):
+        # Arrange
+        decimal = 3.1415926535
+        expected = Decimal("3.142")
+        # Act
+        result = truncated_decimal(decimal, scale=3)
+        # Assert
+        assert result == expected
+
+    def test_float_round_up_above_half_point(self):
+        # Arrange
+        decimal = 3.1415926535
+        expected = Decimal("3.1416")
+        # Act
+        result = truncated_decimal(decimal, scale=4)
         # Assert
         assert result == expected
 
