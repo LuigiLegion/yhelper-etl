@@ -22,6 +22,7 @@ from etl.transform import (
     utc_time_object,
     truncated_decimal,
     ratio,
+    statistics,
     violation,
     inspection,
     restaurant,
@@ -633,6 +634,62 @@ class TestRatio:
         expected = Decimal("55.50")
         # Act
         result = ratio(grade_duration, total_duration)
+        # Assert
+        assert result == expected
+
+
+class TestStatistics:
+    def test_statistics(self):
+        # Arrange
+        sorted_insps = [
+            {
+                'date': '2020-02-08T00:00:00.000',
+                'grade': 'B',
+                'score': 19,
+            },
+            {
+                'date': '2020-01-31T00:00:00.000',
+                'grade': 'C',
+                'score': 60,
+            },
+            {
+                'date': '2019-08-07T00:00:00.000',
+                'grade': 'A',
+                'score': 13,
+            },
+            {
+                'date': '2019-06-06T00:00:00.000',
+                'grade': 'B',
+                'score': 19,
+            },
+            {
+                'date': '2018-10-24T00:00:00.000',
+                'grade': 'C',
+                'score': 38,
+            },
+            {
+                'date': '2018-03-13T00:00:00.000',
+                'grade': 'C',
+                'score': 62,
+            },
+            {
+                'date': '2017-10-06T00:00:00.000',
+                'grade': 'A',
+                'score': 5,
+            },
+            {
+                'date': '2017-07-17T00:00:00.000',
+                'grade': 'A',
+                'score': 0,
+            },
+        ]
+        expected = {
+            "A": Decimal("65.54"),
+            "B": Decimal("10.12"),
+            "C": Decimal("24.33"),
+        }
+        # Act
+        result = statistics(sorted_insps)
         # Assert
         assert result == expected
 
