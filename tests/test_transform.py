@@ -569,7 +569,9 @@ class TestGrades:
 class TestUnixTime:
     def test_unix_time(self):
         # Arrange
-        utc_time_obj = datetime.strptime("2015-10-21T00:00:00.000", "%Y-%m-%dT%H:%M:%S.%f")
+        utc_time_obj = datetime.strptime(
+            "2015-10-21T00:00:00.000", "%Y-%m-%dT%H:%M:%S.%f"
+        )
         expected = 1445385600.0
         # Act
         result = unix_time(utc_time_obj)
@@ -643,44 +645,44 @@ class TestStatistics:
         # Arrange
         sorted_insps = [
             {
-                'date': '2020-02-08T00:00:00.000',
-                'grade': 'B',
-                'score': 19,
+                "date": "2020-02-08T00:00:00.000",
+                "grade": "B",
+                "score": 19,
             },
             {
-                'date': '2020-01-31T00:00:00.000',
-                'grade': 'C',
-                'score': 60,
+                "date": "2020-01-31T00:00:00.000",
+                "grade": "C",
+                "score": 60,
             },
             {
-                'date': '2019-08-07T00:00:00.000',
-                'grade': 'A',
-                'score': 13,
+                "date": "2019-08-07T00:00:00.000",
+                "grade": "A",
+                "score": 13,
             },
             {
-                'date': '2019-06-06T00:00:00.000',
-                'grade': 'B',
-                'score': 19,
+                "date": "2019-06-06T00:00:00.000",
+                "grade": "B",
+                "score": 19,
             },
             {
-                'date': '2018-10-24T00:00:00.000',
-                'grade': 'C',
-                'score': 38,
+                "date": "2018-10-24T00:00:00.000",
+                "grade": "C",
+                "score": 38,
             },
             {
-                'date': '2018-03-13T00:00:00.000',
-                'grade': 'C',
-                'score': 62,
+                "date": "2018-03-13T00:00:00.000",
+                "grade": "C",
+                "score": 62,
             },
             {
-                'date': '2017-10-06T00:00:00.000',
-                'grade': 'A',
-                'score': 5,
+                "date": "2017-10-06T00:00:00.000",
+                "grade": "A",
+                "score": 5,
             },
             {
-                'date': '2017-07-17T00:00:00.000',
-                'grade': 'A',
-                'score': 0,
+                "date": "2017-07-17T00:00:00.000",
+                "grade": "A",
+                "score": 0,
             },
         ]
         expected = {

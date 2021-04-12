@@ -125,7 +125,9 @@ def statistics(sorted_insps: List[dict]) -> dict:
 
             else:
                 insp_unix_time = unix_time(utc_time_object(insp.get("date")))
-                prev_insp_unix_time = unix_time(utc_time_object(sorted_insps[i + 1].get("date")))
+                prev_insp_unix_time = unix_time(
+                    utc_time_object(sorted_insps[i + 1].get("date"))
+                )
 
             unix_time_diff = insp_unix_time - prev_insp_unix_time
             durations[grade] += unix_time_diff
