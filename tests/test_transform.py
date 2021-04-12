@@ -21,6 +21,7 @@ from etl.transform import (
     unix_time,
     utc_time_object,
     truncated_decimal,
+    ratio,
     violation,
     inspection,
     restaurant,
@@ -590,7 +591,7 @@ class TestTruncatedDecimal:
     def test_int(self):
         # Arrange
         decimal = 42
-        expected = Decimal("42.0")
+        expected = Decimal("42.00")
         # Act
         result = truncated_decimal(decimal, scale=2)
         # Assert
@@ -620,6 +621,18 @@ class TestTruncatedDecimal:
         expected = Decimal("3.1416")
         # Act
         result = truncated_decimal(decimal, scale=4)
+        # Assert
+        assert result == expected
+
+
+class TestRatio:
+    def test_ratio(self):
+        # Arrange
+        grade_duration = 55.5
+        total_duration = 100.0
+        expected = Decimal("55.50")
+        # Act
+        result = ratio(grade_duration, total_duration)
         # Assert
         assert result == expected
 
