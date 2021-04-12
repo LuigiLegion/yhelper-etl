@@ -1072,10 +1072,14 @@ class TestTransform:
         extract_file = "tests/data/raw/sample.json"
         transform_file = "tests/data/result/sample.json"
 
-        with open(expected_file, "r") as f:
-            expected = load(f)
+        with open(expected_file, "r") as ef:
+            expected = load(ef)
 
         # Act
-        result = transform(extract_file, transform_file)
+        transform(extract_file, transform_file)
+
+        with open(transform_file, "r") as tf:
+            result = load(tf)
+
         # Assert
         assert result == expected
