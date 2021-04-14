@@ -686,9 +686,9 @@ class TestStatistics:
             },
         ]
         expected = {
-            "A": Decimal("65.54"),
+            "A": Decimal("65.57"),
             "B": Decimal("10.12"),
-            "C": Decimal("24.33"),
+            "C": Decimal("24.31"),
         }
         # Act
         result = statistics(sorted_insps)
