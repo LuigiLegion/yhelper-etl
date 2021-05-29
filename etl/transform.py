@@ -106,7 +106,10 @@ def ratio(grade_duration: float, total_duration: float) -> Decimal:
     return truncated_decimal((grade_duration / total_duration) * 100, scale=2)
 
 
-def statistics(sorted_insps: List[dict]) -> dict:
+def statistics(
+    sorted_insps: List[dict],
+    unix_time_now: float = unix_time(datetime.utcnow()),
+) -> dict:
     durations = grades()
 
     insps_count = len(sorted_insps) - 1
@@ -120,7 +123,7 @@ def statistics(sorted_insps: List[dict]) -> dict:
                 prev_grade = grade
 
             if i == insps_count:
-                insp_unix_time = unix_time(datetime.utcnow())
+                insp_unix_time = unix_time_now
                 prev_insp_unix_time = unix_time(utc_time_object(insp.get("date")))
 
             else:
@@ -176,7 +179,11 @@ def restaurant(datum: dict, date: str) -> dict:
     }
 
 
-def transform(extract_file: str, transform_file: str) -> List[dict]:
+def transform(
+    extract_file: str,
+    transform_file: str,
+    is_test: bool = False,
+) -> List[dict]:
     # Load inspections data from file
     with open(extract_file, "r") as ef:
         data = load(ef)
@@ -220,7 +227,7 @@ def transform(extract_file: str, transform_file: str) -> List[dict]:
         insps_list = [insp for insp in rest.get("inspections").values()]
         sorted_insps = sorted(insps_list, key=itemgetter("date"), reverse=True)
 
-        rest["statistics"] = statistics(sorted_insps)
+        rest["statistics"] = statistics(sorted_insps, unix_time_now=1621798200.121685) if is_test else statistics(sorted_insps)
 
         for sorted_insp in sorted_insps:
             sorted_insp["date"] = formatted_date(sorted_insp.get("date"))
