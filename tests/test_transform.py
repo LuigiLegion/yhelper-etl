@@ -686,12 +686,12 @@ class TestStatistics:
             },
         ]
         expected = {
-            "A": Decimal("65.57"),
-            "B": Decimal("10.12"),
-            "C": Decimal("24.31"),
+            "A": Decimal("66.15"),
+            "B": Decimal("9.95"),
+            "C": Decimal("23.90"),
         }
         # Act
-        result = statistics(sorted_insps)
+        result = statistics(sorted_insps, unix_time_now=1621798200.121685)
         # Assert
         assert result == expected
 
@@ -1078,7 +1078,7 @@ class TestTransform:
             expected = load(ef)
 
         # Act
-        transform(extract_file, transform_file)
+        transform(extract_file, transform_file, is_test=True)
 
         with open(transform_file, "r") as tf:
             result = load(tf)
