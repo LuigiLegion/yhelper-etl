@@ -54,7 +54,7 @@ def formatted_phone(phone: str) -> str:
 
 
 def formatted_date(date: str) -> str:
-    return mod_digits(date[5:7]) + "/" + mod_digits(date[8:10]) + "/" + date[:4]
+    return f"{mod_digits(date[5:7])}/{mod_digits(date[8:10])}/{date[:4]}"
 
 
 def formatted_score(score: Optional[str]) -> Optional[int]:
