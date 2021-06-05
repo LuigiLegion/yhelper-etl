@@ -1071,7 +1071,7 @@ class TestTransform:
     def test_data_sample(self):
         # Arrange
         expected_file = "tests/data/expected/sample.json"
-        extract_file = "tests/data/raw/sample.json"
+        extract_file = "tests/data/source/sample.json"
         transform_file = "tests/data/result/sample.json"
 
         with open(expected_file, "r") as ef:
