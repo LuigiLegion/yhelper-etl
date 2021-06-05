@@ -227,7 +227,11 @@ def transform(
         insps_list = [insp for insp in rest.get("inspections").values()]
         sorted_insps = sorted(insps_list, key=itemgetter("date"), reverse=True)
 
-        rest["statistics"] = statistics(sorted_insps, unix_time_now=1621798200.121685) if is_test else statistics(sorted_insps)
+        rest["statistics"] = (
+            statistics(sorted_insps, unix_time_now=1621798200.121685)
+            if is_test
+            else statistics(sorted_insps)
+        )
 
         for sorted_insp in sorted_insps:
             sorted_insp["date"] = formatted_date(sorted_insp.get("date"))
