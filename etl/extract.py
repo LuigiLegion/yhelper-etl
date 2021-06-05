@@ -44,7 +44,7 @@ def extract(
 
 
 if __name__ == "__main__":
-    # Extract raw data from Socrata
+    # Extract source data from Socrata
     extract(
         SOCARTA_TOKEN,
         SOCRATA_COLLECTION,

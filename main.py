@@ -19,7 +19,7 @@ FIRESTORE_LOAD_CYCLE = 0
 
 # Initializations
 def main():
-    # Extract raw data from Socrata
+    # Extract source data from Socrata
     extract(
         SOCARTA_TOKEN,
         SOCRATA_COLLECTION,
@@ -27,7 +27,7 @@ def main():
         SOCRATA_RECORD_LIMIT,
         EXTRACT_FILE,
     )
-    # Transform raw data
+    # Transform source data
     transform(EXTRACT_FILE, TRANSFORM_FILE)
     # Load transformed data to Firestore
     load(

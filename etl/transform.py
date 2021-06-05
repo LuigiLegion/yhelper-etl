@@ -248,5 +248,5 @@ def transform(
 
 
 if __name__ == "__main__":
-    # Transform raw data
+    # Transform source data
     transform(EXTRACT_FILE, TRANSFORM_FILE)
