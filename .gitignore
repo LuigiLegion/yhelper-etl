@@ -6,8 +6,9 @@ __pycache__
 env
 venv
 
-secrets
-!secrets/*-example.json
-data
-!data/*-example.json
-tests/data/result/sample.json
+/secrets
+!/secrets/*-example.json
+
+/data
+!/data/*-example.json
+/tests/data/result/sample.json
