@@ -5,35 +5,34 @@ from etl.load import load
 
 
 # Constants
-SOCARTA_TOKEN = None
-SOCRATA_COLLECTION = "data.cityofnewyork.us"
-SOCRATA_DOCUMENT = "43nn-pn8j"
+SOCARTA_ACCESS_TOKEN = None
+SOCRATA_COLLECTION_NAME = "data.cityofnewyork.us"
+SOCRATA_DOCUMENT_ID = "43nn-pn8j"
 SOCRATA_RECORD_LIMIT = 400000
-EXTRACT_FILE = "data/inspections.json"
-TRANSFORM_FILE = "data/restaurants.json"
-FIRESTORE_SAK_FILE = "secrets/service-account-key.json"
-FIRESTORE_COLLECTION = "restaurants"
+SOURCE_FILE_PATH = "data/inspections.json"
+TARGET_FILE_PATH = "data/restaurants.json"
+FIRESTORE_SAK_FILE_PATH = "secrets/service-account-key.json"
+FIRESTORE_COLLECTION_NAME = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0
 
 
 # Initializations
 def main():
-    # Extract source data from Socrata
     extract(
-        SOCARTA_TOKEN,
-        SOCRATA_COLLECTION,
-        SOCRATA_DOCUMENT,
+        SOCARTA_ACCESS_TOKEN,
+        SOCRATA_COLLECTION_NAME,
+        SOCRATA_DOCUMENT_ID,
         SOCRATA_RECORD_LIMIT,
-        EXTRACT_FILE,
+        SOURCE_FILE_PATH,
     )
-    # Transform source data
-    transform(EXTRACT_FILE, TRANSFORM_FILE)
-    # Load transformed data to Firestore
+
+    transform(SOURCE_FILE_PATH, TARGET_FILE_PATH)
+
     load(
-        TRANSFORM_FILE,
-        FIRESTORE_SAK_FILE,
-        FIRESTORE_COLLECTION,
+        TARGET_FILE_PATH,
+        FIRESTORE_SAK_FILE_PATH,
+        FIRESTORE_COLLECTION_NAME,
         FIRESTORE_RECORD_LIMIT,
         FIRESTORE_LOAD_CYCLE,
     )
