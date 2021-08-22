@@ -6,33 +6,34 @@ from simplejson import dump
 
 
 # Constants
-SOCARTA_TOKEN = None
-SOCRATA_COLLECTION = "data.cityofnewyork.us"
-SOCRATA_DOCUMENT = "43nn-pn8j"
+SOCARTA_ACCESS_TOKEN = None
+SOCRATA_COLLECTION_NAME = "data.cityofnewyork.us"
+SOCRATA_DOCUMENT_ID = "43nn-pn8j"
 SOCRATA_RECORD_LIMIT = 400000
-EXTRACT_FILE = "../data/inspections.json"
+SOURCE_FILE_PATH = "../data/inspections.json"
 
 
 # Initializations
 def extract(
-    token: Optional[str],
-    collection: str,
-    document: str,
-    limit: int,
-    extract_file: str,
+    access_token: Optional[str],
+    collection_name: str,
+    document_id: str,
+    record_limit: int,
+    source_file_path: str,
 ) -> None:
+    """
+    Extracts source data from Socrata by initializing a Socarata client for a
+    collection given a collection name and access token, extracting the data
+    from a document given a document ID and record limit, and writing the data
+    to a JSON file given a source file path.
+    """
+
     try:
-        # Initialize Socrata client
-        client = Socrata(collection, token)
-
-        # Extract data from document
-        data = client.get(document, limit=limit)
-
-        # Print number of inspections in dataset
+        client = Socrata(collection_name, access_token)
+        data = client.get(document_id, limit=record_limit)
         print(f"total inspections count: {len(data)}")  # 395980
 
-        # Dump inspections data to file
-        with open(extract_file, "w") as f:
+        with open(source_file_path, "w") as f:
             dump(data, f, indent=4)
 
     except Exception as err:
@@ -40,15 +41,14 @@ def extract(
         raise err
 
     else:
-        print("Extraction Process Completed Successfully")
+        print("Data Extraction Process Completed Successfully")
 
 
 if __name__ == "__main__":
-    # Extract source data from Socrata
     extract(
-        SOCARTA_TOKEN,
-        SOCRATA_COLLECTION,
-        SOCRATA_DOCUMENT,
+        SOCARTA_ACCESS_TOKEN,
+        SOCRATA_COLLECTION_NAME,
+        SOCRATA_DOCUMENT_ID,
         SOCRATA_RECORD_LIMIT,
-        EXTRACT_FILE,
+        SOURCE_FILE_PATH,
     )
