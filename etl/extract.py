@@ -21,12 +21,10 @@ def extract(
     record_limit: int,
     source_file_path: str,
 ) -> None:
-    """
-    Extracts source data from Socrata by initializing a Socarata client for a
-    collection given a collection name and access token, extracting the data
+    """Extracts source data from Socrata by initializing a Socrata client for
+    a collection given a collection name and access token, extracting the data
     from a document given a document ID and record limit, and writing the data
-    to a JSON file given a source file path.
-    """
+    to a JSON file given a source file path."""
 
     try:
         client = Socrata(collection_name, access_token)
