@@ -14,7 +14,7 @@ MVP completed in a day for a solo project.
 
 ### Tech Stack:
 
-Built using Python, sodapy, and Firestore.
+Built using Python, sodapy, and firebase-admin.
 
 ### Dev Team:
 
