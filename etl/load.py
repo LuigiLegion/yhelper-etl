@@ -7,9 +7,9 @@ import simplejson
 
 
 # Constants
-TRANSFORM_FILE = "../data/restaurants.json"
-FIRESTORE_SAK_FILE = "secrets/service-account-key.json"
-FIRESTORE_COLLECTION = "restaurants"
+TARGET_FILE_PATH = "../data/restaurants.json"
+FIRESTORE_SAK_FILE_PATH = "secrets/service-account-key.json"
+FIRESTORE_COLLECTION_NAME = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
 FIRESTORE_LOAD_CYCLE = 0
 
@@ -20,15 +20,15 @@ def file_path(file_name: str) -> str:
 
 
 def load(
-    transform_file: str,
-    sak_file: str,
-    collection: str,
-    limit: int,
-    cycle: int,
+    target_file_path: str,
+    sak_file_path: str,
+    collection_name: str,
+    record_limit: int,
+    load_cycle: int,
 ) -> None:
     try:
         # Determine Firestore service account key file path
-        path = file_path(sak_file)
+        path = file_path(sak_file_path)
 
         # Initialize Firestore client
         cred = credentials.Certificate(path)
@@ -36,15 +36,15 @@ def load(
         db = firestore.client()
 
         # Load restaurants data from file
-        with open(transform_file, "r") as f:
+        with open(target_file_path, "r") as f:
             data = simplejson.load(f)
 
         # Initialize Firestore collection reference
-        coll_ref = db.collection(collection)
+        collection_ref = db.collection(collection_name)
 
         # Determine lower, upper, and max bounds
-        lower_bound = limit * cycle
-        upper_bound = limit * (cycle + 1)
+        lower_bound = record_limit * load_cycle
+        upper_bound = record_limit * (load_cycle + 1)
         max_bound = len(data)
 
         if upper_bound > max_bound:
@@ -52,7 +52,7 @@ def load(
 
         for i in range(lower_bound, upper_bound):
             for key, datum in data[i].items():
-                coll_ref.document(key).set(datum)
+                collection_ref.document(key).set(datum)
                 print(f"Added: {key}")
 
     except Exception as err:
@@ -60,15 +60,14 @@ def load(
         raise err
 
     else:
-        print("Load Process Completed Successfully")
+        print("Data Load Process Completed Successfully")
 
 
 if __name__ == "__main__":
-    # Load transformed data to Firestore
     load(
-        TRANSFORM_FILE,
-        FIRESTORE_SAK_FILE,
-        FIRESTORE_COLLECTION,
+        TARGET_FILE_PATH,
+        FIRESTORE_SAK_FILE_PATH,
+        FIRESTORE_COLLECTION_NAME,
         FIRESTORE_RECORD_LIMIT,
         FIRESTORE_LOAD_CYCLE,
     )
