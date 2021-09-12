@@ -1,6 +1,14 @@
 # Miscellaneous
 __pycache__
+.pytest_cache
+.DS_Store
+.vscode
+env
 venv
-serviceAccountKey.json
-restaurants.json
-inspections.json
+
+/secrets
+!/secrets/*-example.json
+
+/data
+!/data/*-example.json
+/tests/data/result/sample.json
