@@ -189,18 +189,18 @@ def transform(
         data = load(ef)
 
     # Initialize restaurants dict
-    rests = {}
+    restaurants = {}
 
     for datum in data:
         phone = formatted_phone(phone_digits(datum.get("phone")))
         date = datum.get("inspection_date")
 
         if is_valid_phone(phone) and is_valid_date(date):
-            if phone in rests:
-                insps = rests.get(phone).get("inspections")
+            if phone in restaurants:
+                inspections = restaurants.get(phone).get("inspections")
 
-                if date in insps:
-                    insp = insps.get(date)
+                if date in inspections:
+                    insp = inspections.get(date)
 
                     if datum.get("violation_description"):
                         viol = violation(datum)
@@ -215,42 +215,41 @@ def transform(
                             insp["grade"] = grade
 
                 else:
-                    insps[date] = inspection(datum)
+                    inspections[date] = inspection(datum)
 
             else:
-                rests[phone] = restaurant(datum, date)
+                restaurants[phone] = restaurant(datum, date)
 
     # Initialize restaurants list
-    rests_list = []
+    restaurant_list = []
 
-    for phone, rest in rests.items():
-        insps_list = [insp for insp in rest.get("inspections").values()]
-        sorted_insps = sorted(insps_list, key=itemgetter("date"), reverse=True)
+    for phone, rest in restaurants.items():
+        inspection_list = [i for i in rest.get("inspections").values()]
+        sorted_inspections = sorted(inspection_list, key=itemgetter("date"), reverse=True)
 
         rest["statistics"] = (
-            statistics(sorted_insps, unix_time_now=1621798200.121685)
+            statistics(sorted_inspections, unix_time_now=1621798200.121685)
             if is_test
-            else statistics(sorted_insps)
+            else statistics(sorted_inspections)
         )
 
-        for sorted_insp in sorted_insps:
-            sorted_insp["date"] = formatted_date(sorted_insp.get("date"))
+        for sorted_inspection in sorted_inspections:
+            sorted_inspection["date"] = formatted_date(sorted_inspection.get("date"))
 
-        rest["inspections"] = sorted_insps
-        rests_list.append({phone: rest})
+        rest["inspections"] = sorted_inspections
+        restaurant_list.append({phone: rest})
 
     # Print number of restaurants with valid inspections in dataset
-    print(f"total restaurants count: {len(rests_list)}")  # 24258
+    print(f"total restaurants count: {len(restaurant_list)}")  # 24258
 
     # Dump restaurants data to file
     with open(transform_file, "w") as tf:
-        dump(rests_list, tf, indent=4)
+        dump(restaurant_list, tf, indent=4)
 
-    print("Transformation Process Completed Successfully")
+    print("Data Transformation Process Completed Successfully")
 
-    return rests_list
+    return restaurant_list
 
 
 if __name__ == "__main__":
-    # Transform source data
     transform(EXTRACT_FILE, TRANSFORM_FILE)
