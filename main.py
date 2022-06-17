@@ -1,7 +1,7 @@
 # Imports
-from etl.extract import extract
-from etl.transform import transform
-from etl.load import load
+from src.etl import extract
+from src.etl.transform import transform
+from src.etl.load import load
 
 
 # Constants
