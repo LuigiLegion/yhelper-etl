@@ -1,13 +1,13 @@
 # Imports
 import os
 
+import simplejson
 import firebase_admin
 from firebase_admin import credentials, firestore
-import simplejson
 
 
 # Constants
-TARGET_FILE_PATH = "../data/restaurants.json"
+TARGET_FILE_PATH = "../../data/restaurants.json"
 FIRESTORE_SAK_FILE_PATH = "secrets/service-account-key.json"
 FIRESTORE_COLLECTION_NAME = "restaurants"
 FIRESTORE_RECORD_LIMIT = 15000
