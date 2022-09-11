@@ -1,8 +1,8 @@
 # Imports
 from typing import Optional
 
-from sodapy import Socrata
 from simplejson import dump
+from sodapy import Socrata
 
 
 # Constants
@@ -10,7 +10,7 @@ SOCARTA_ACCESS_TOKEN = None
 SOCRATA_COLLECTION_NAME = "data.cityofnewyork.us"
 SOCRATA_DOCUMENT_ID = "43nn-pn8j"
 SOCRATA_RECORD_LIMIT = 400000
-SOURCE_FILE_PATH = "../data/inspections.json"
+SOURCE_FILE_PATH = "../../data/inspections.json"
 
 
 # Initializations
